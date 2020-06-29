@@ -1,0 +1,10 @@
+Bổ sung:
+
+Mã hóa password là 1 chiều, thường dùng hash.
+Số người tham dự giới hạn cho Hội nghị phụ thuộc vào địa điểm và tổ chức.
+Nhiều Hội nghị có thể diễn ra đồng thời (không trùng địa điểm).
+Admin quản lý mọi dữ liệu có trong database.
+Các lưu ý:
+
+Ưu tiên sử dụng Netbeans.
+Có nộp database (script) với dữ liệu test có nghĩa.
