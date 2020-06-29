@@ -1,0 +1,45 @@
+https://dbdiagram.io/d/5efa18180425da461f04045f
+
+table conferences{
+  id varchar(20) [pk]
+  name nvarchar(20)
+  shortDescription nvarchar(50)
+  detailDescription nvarchar(200)
+  image nvarchar(20)
+  holdTime datetime
+  conferencetime int
+}
+
+table vanueLocations{
+  id varchar(20) [pk]
+  name nvarchar(20) 
+  address nvarchar(20)
+  limitPerson int
+}
+
+table conferenceVanueLocations{
+  conferenceId varchar(20) [pk, ref: > conferences.id]
+  holdTime datetime [pk, ref: > conferences.holdTime]
+  conferencetime int [pk, ref: > conferences.conferencetime]
+  vanueLocationId varchar(20) [pk, ref: > vanueLocations.id]
+}
+
+table accounts{
+  id varchar(20) [pk]
+  name nvarchar(20)
+  username varchar(20)
+  password varchar(20)
+  email varchar(50)
+  isAdmin boolean
+}
+
+table meetingAccounts{
+  accountId varchar(20) [pk, ref: > accounts.id]
+  conferenceId varchar(20) [pk, ref: > conferences.id]
+}
+
+
+  
+  
+  
+
