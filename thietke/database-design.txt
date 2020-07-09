@@ -7,21 +7,21 @@ table conferences{
   detailDescription nvarchar(200)
   image nvarchar(20)
   holdTime datetime
-  conferencetime int
+  conferenceTime int
 }
 
-table vanueLocations{
+table venueLocations{
   id varchar(20) [pk]
   name nvarchar(20) 
   address nvarchar(20)
   limitPerson int
 }
 
-table conferenceVanueLocations{
+table conferenceVenueLocations{
   conferenceId varchar(20) [pk, ref: > conferences.id]
   holdTime datetime [pk, ref: > conferences.holdTime]
-  conferencetime int [pk, ref: > conferences.conferencetime]
-  vanueLocationId varchar(20) [pk, ref: > vanueLocations.id]
+  conferenceTime int [pk, ref: > conferences.conferenceTime]
+  venueLocationId varchar(20) [pk, ref: > venueLocations.id]
 }
 
 table accounts{
@@ -37,7 +37,6 @@ table meetingAccounts{
   accountId varchar(20) [pk, ref: > accounts.id]
   conferenceId varchar(20) [pk, ref: > conferences.id]
 }
-
 
   
   

@@ -5,22 +5,22 @@ CREATE TABLE `conferences` (
   `detailDescription` nvarchar(200),
   `image` nvarchar(20),
   `holdTime` datetime,
-  `conferencetime` int
+  `conferenceTime` int
 );
 
-CREATE TABLE `vanueLocations` (
+CREATE TABLE `venueLocations` (
   `id` varchar(20) PRIMARY KEY,
   `name` nvarchar(20),
   `address` nvarchar(20),
   `limitPerson` int
 );
 
-CREATE TABLE `conferenceVanueLocations` (
+CREATE TABLE `conferenceVenueLocations` (
   `conferenceId` varchar(20),
   `holdTime` datetime,
-  `conferencetime` int,
-  `vanueLocationId` varchar(20),
-  PRIMARY KEY (`conferenceId`, `holdTime`, `conferencetime`, `vanueLocationId`)
+  `conferenceTime` int,
+  `venueLocationId` varchar(20),
+  PRIMARY KEY (`conferenceId`, `holdTime`, `conferenceTime`, `venueLocationId`)
 );
 
 CREATE TABLE `accounts` (
@@ -38,15 +38,13 @@ CREATE TABLE `meetingAccounts` (
   PRIMARY KEY (`accountId`, `conferenceId`)
 );
 
-ALTER TABLE `conferenceVanueLocations` ADD FOREIGN KEY (`conferenceId`) REFERENCES `conferences` (`id`);
+ALTER TABLE `conferenceVenueLocations` ADD FOREIGN KEY (`conferenceId`) REFERENCES `conferences` (`id`);
 
-ALTER TABLE `conferenceVanueLocations` ADD FOREIGN KEY (`holdTime`) REFERENCES `conferences` (`holdTime`);
+ALTER TABLE `conferenceVenueLocations` ADD FOREIGN KEY (`holdTime`) REFERENCES `conferences` (`holdTime`);
 
-ALTER TABLE `conferenceVanueLocations` ADD FOREIGN KEY (`conferencetime`) REFERENCES `conferences` (`conferencetime`);
+ALTER TABLE `conferenceVenueLocations` ADD FOREIGN KEY (`conferenceTime`) REFERENCES `conferences` (`conferenceTime`);
 
-ALTER TABLE `conferenceVanueLocations` ADD FOREIGN KEY (`vanueLocationId`) REFERENCES `vanueLocations` (`id`);
+ALTER TABLE `conferenceVenueLocations` ADD FOREIGN KEY (`venueLocationId`) REFERENCES `venueLocations` (`id`);
 
 ALTER TABLE `meetingAccounts` ADD FOREIGN KEY (`accountId`) REFERENCES `accounts` (`id`);
-
-ALTER TABLE `meetingAccounts` ADD FOREIGN KEY (`conferenceId`) REFERENCES `conferences` (`id`);
 
