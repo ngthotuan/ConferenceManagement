@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Place {
+public class Place implements DAO{
     private int id;
     private String name;
     private String address;
@@ -68,7 +68,7 @@ public class Place {
         return Objects.hash(id, name, address, limitPerson);
     }
 
-    @OneToMany(mappedBy = "placeByPlaceId")
+    @OneToMany(mappedBy = "placeByPlaceId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Collection<Conference> getConferencesById() {
         return conferencesById;
     }

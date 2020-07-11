@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class BasicDAO {
 
-    public static DAO get(String id, Class<? extends DAO> daoClass){
+    protected static DAO get(String id, Class<? extends DAO> daoClass){
         DAO dao = null;
         Session session = HibernateUtils.getSessionFactory().openSession();
         try{
@@ -21,7 +21,7 @@ public abstract class BasicDAO {
         }
         return dao;
     }
-    public static DAO get(int id, Class<? extends DAO> daoClass){
+    protected static DAO get(int id, Class<? extends DAO> daoClass){
         DAO dao = null;
         Session session = HibernateUtils.getSessionFactory().openSession();
         try{
@@ -31,7 +31,7 @@ public abstract class BasicDAO {
         }
         return dao;
     }
-    public static List<? extends DAO> getAll(String table){
+    protected static List<? extends DAO> getAll(String table){
         List<? extends DAO> ds = null;
         Session session = HibernateUtils.getSessionFactory().openSession();
         try {
@@ -46,7 +46,7 @@ public abstract class BasicDAO {
         }
         return ds;
     }
-    public static boolean create(DAO dao){
+    protected static boolean create(DAO dao){
         boolean result = true;
         Session session = HibernateUtils.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -64,7 +64,7 @@ public abstract class BasicDAO {
         }
         return result;
     }
-    public static boolean update(DAO dao){
+    protected static boolean update(DAO dao){
         boolean result = true;
         Session session = HibernateUtils.getSessionFactory().openSession();
         Transaction transaction = null;

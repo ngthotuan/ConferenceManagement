@@ -1,5 +1,9 @@
 package Model.Pojo;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -131,7 +135,7 @@ public class Conference implements DAO{
     }
 
     @ManyToOne
-    @JoinColumn(name = "placeId", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "placeId", referencedColumnName = "id", insertable = false, updatable = false)
     public Place getPlaceByPlaceId() {
         return placeByPlaceId;
     }

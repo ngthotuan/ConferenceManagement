@@ -9,7 +9,7 @@ public class ConferenceController extends BasicDAO{
         return (Conference) get(id, Conference.class);
     }
     public static List<Conference> getConferences(){
-        return (List<Conference>) getAll("Conferences");
+        return (List<Conference>) getAll("Conference");
     }
 
     public static boolean createConference(Conference conference) {
