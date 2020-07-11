@@ -1,42 +1,48 @@
 https://dbdiagram.io/d/5efa18180425da461f04045f
 
-table conferences{
-  id varchar(20) [pk]
-  name nvarchar(20)
-  shortDescription nvarchar(50)
-  detailDescription nvarchar(200)
-  image nvarchar(20)
+table Conferences{
+  id int [pk, increment]
+  placeId int [ref: > Places.id]
+  name varchar(50)
+  shortDescription varchar(50)
+  detailDescription varchar(200)
+  image varchar(200)
   holdTime datetime
-  conferenceTime int
+  conferenceTime long
+  currentPerson int [default: 0]
 }
 
-table venueLocations{
-  id varchar(20) [pk]
-  name nvarchar(20) 
-  address nvarchar(20)
+table Places{
+  id int [pk, increment]
+  name varchar(50) 
+  address varchar(50)
   limitPerson int
 }
 
-table conferenceVenueLocations{
-  conferenceId varchar(20) [pk, ref: > conferences.id]
-  holdTime datetime [pk, ref: > conferences.holdTime]
-  conferenceTime int [pk, ref: > conferences.conferenceTime]
-  venueLocationId varchar(20) [pk, ref: > venueLocations.id]
-}
-
-table accounts{
-  id varchar(20) [pk]
-  name nvarchar(20)
-  username varchar(20)
-  password varchar(20)
+table Users{
+  username varchar(20) [pk]
+  password varchar(50)
+  name varchar(30)
   email varchar(50)
-  isAdmin boolean
+  isAdmin bool
 }
 
-table meetingAccounts{
-  accountId varchar(20) [pk, ref: > accounts.id]
-  conferenceId varchar(20) [pk, ref: > conferences.id]
+table MeetingAccounts{
+  userId varchar(20) [pk, ref: > Users.username]
+  conferenceId int [pk, ref: > Conferences.id]
 }
+
+
+  
+  
+  
+
+
+
+  
+  
+  
+
 
   
   
