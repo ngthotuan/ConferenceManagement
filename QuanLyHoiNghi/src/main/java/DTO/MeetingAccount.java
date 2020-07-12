@@ -1,4 +1,4 @@
-package Model.Pojo;
+package DTO;
 
 import javax.persistence.*;
 import java.util.Objects;

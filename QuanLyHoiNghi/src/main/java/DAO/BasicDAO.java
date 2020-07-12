@@ -1,6 +1,6 @@
-package Controllers.PojoController;
+package DAO;
 
-import Model.Pojo.DAO;
+import DTO.DTO;
 import Utils.HibernateUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -11,28 +11,28 @@ import java.util.List;
 
 public abstract class BasicDAO {
 
-    protected static DAO get(String id, Class<? extends DAO> daoClass){
-        DAO dao = null;
+    protected static DTO get(String id, Class<? extends DTO> daoClass){
+        DTO DTO = null;
         Session session = HibernateUtils.getSessionFactory().openSession();
         try{
-            dao = session.get(daoClass, id);
+            DTO = session.get(daoClass, id);
         } catch (Exception e){
             e.printStackTrace();
         }
-        return dao;
+        return DTO;
     }
-    protected static DAO get(int id, Class<? extends DAO> daoClass){
-        DAO dao = null;
+    protected static DTO get(int id, Class<? extends DTO> daoClass){
+        DTO DTO = null;
         Session session = HibernateUtils.getSessionFactory().openSession();
         try{
-            dao = session.get(daoClass, id);
+            DTO = session.get(daoClass, id);
         } catch (Exception e){
             e.printStackTrace();
         }
-        return dao;
+        return DTO;
     }
-    protected static List<? extends DAO> getAll(String table){
-        List<? extends DAO> ds = null;
+    protected static List<? extends DTO> getAll(String table){
+        List<? extends DTO> ds = null;
         Session session = HibernateUtils.getSessionFactory().openSession();
         try {
             String hql = String.format("from %s", table);
@@ -46,13 +46,13 @@ public abstract class BasicDAO {
         }
         return ds;
     }
-    protected static boolean create(DAO dao){
+    protected static boolean create(DTO DTO){
         boolean result = true;
         Session session = HibernateUtils.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.save(dao);
+            session.save(DTO);
             transaction.commit();
         } catch (HibernateException ex) {
             //Log the exception
@@ -64,13 +64,13 @@ public abstract class BasicDAO {
         }
         return result;
     }
-    protected static boolean update(DAO dao){
+    protected static boolean update(DTO DTO){
         boolean result = true;
         Session session = HibernateUtils.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.update(dao);
+            session.update(DTO);
             transaction.commit();
         } catch (HibernateException ex) {
             //Log the exception

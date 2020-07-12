@@ -1,6 +1,6 @@
-package Controllers.PojoController;
+package DAO;
 
-import Model.Pojo.User;
+import DTO.User;
 import Utils.Password;
 
 import java.util.List;

@@ -1,13 +1,7 @@
 package Main;
 
-import Controllers.PojoController.BasicDAO;
-import Controllers.PojoController.ConferenceController;
-import Controllers.PojoController.PlaceController;
-import Controllers.PojoController.UserController;
-import Model.Pojo.Conference;
-import Model.Pojo.User;
-
-import java.util.List;
+import DAO.ConferenceController;
+import DTO.Conference;
 
 public class MainClass {
 

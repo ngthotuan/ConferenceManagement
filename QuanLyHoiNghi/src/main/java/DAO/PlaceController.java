@@ -1,6 +1,6 @@
-package Controllers.PojoController;
+package DAO;
 
-import Model.Pojo.Place;
+import DTO.Place;
 
 import java.util.List;
 

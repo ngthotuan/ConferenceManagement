@@ -1,6 +1,6 @@
-package Controllers.PojoController;
+package DAO;
 
-import Model.Pojo.Conference;
+import DTO.Conference;
 
 import java.util.List;
 

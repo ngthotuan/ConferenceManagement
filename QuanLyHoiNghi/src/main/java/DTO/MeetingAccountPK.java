@@ -1,4 +1,4 @@
-package Model.Pojo;
+package DTO;
 
 import javax.persistence.Column;
 import javax.persistence.Id;

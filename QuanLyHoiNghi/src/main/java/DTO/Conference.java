@@ -1,8 +1,4 @@
-package Model.Pojo;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+package DTO;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -10,7 +6,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Conference implements DAO{
+public class Conference implements DTO {
     private int id;
     private Integer placeId;
     private String name;

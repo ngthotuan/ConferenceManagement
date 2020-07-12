@@ -16,10 +16,10 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ConferenceManagement</property>
     <property name="connection.username">root</property>
     <property name="connection.password">root</property>
-    <mapping class="Model.Pojo.Conference"/>
-    <mapping class="Model.Pojo.MeetingAccount"/>
-    <mapping class="Model.Pojo.Place"/>
-    <mapping class="Model.Pojo.User"/>
+    <mapping class="DTO.Conference"/>
+    <mapping class="DTO.MeetingAccount"/>
+    <mapping class="DTO.Place"/>
+    <mapping class="DTO.User"/>
 
 
     <!-- DB schema will be updated if needed -->

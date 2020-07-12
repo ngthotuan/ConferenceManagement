@@ -1,11 +1,11 @@
-package Model.Pojo;
+package DTO;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Place implements DAO{
+public class Place implements DTO {
     private int id;
     private String name;
     private String address;
