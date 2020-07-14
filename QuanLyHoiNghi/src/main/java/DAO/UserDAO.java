@@ -5,7 +5,7 @@ import Utils.Password;
 
 import java.util.List;
 
-public class UserController extends BasicDAO{
+public class UserDAO extends BasicDAO{
 
     public static User getUser(String username){
         return (User) get(username, User.class);

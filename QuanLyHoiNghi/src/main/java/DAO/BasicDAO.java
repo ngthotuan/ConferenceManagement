@@ -11,21 +11,21 @@ import java.util.List;
 
 public abstract class BasicDAO {
 
-    protected static DTO get(String id, Class<? extends DTO> daoClass){
+    protected static DTO get(String id, Class<? extends DTO> dtoClass){
         DTO DTO = null;
         Session session = HibernateUtils.getSessionFactory().openSession();
         try{
-            DTO = session.get(daoClass, id);
+            DTO = session.get(dtoClass, id);
         } catch (Exception e){
             e.printStackTrace();
         }
         return DTO;
     }
-    protected static DTO get(int id, Class<? extends DTO> daoClass){
+    protected static DTO get(int id, Class<? extends DTO> dtoClass){
         DTO DTO = null;
         Session session = HibernateUtils.getSessionFactory().openSession();
         try{
-            DTO = session.get(daoClass, id);
+            DTO = session.get(dtoClass, id);
         } catch (Exception e){
             e.printStackTrace();
         }

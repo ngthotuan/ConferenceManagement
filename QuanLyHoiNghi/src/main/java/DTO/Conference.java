@@ -19,6 +19,14 @@ public class Conference implements DTO {
     private Place placeByPlaceId;
     private Collection<MeetingAccount> meetingAccountsById;
 
+    public Conference() {
+    }
+
+    public Conference(String name, Integer currentPerson) {
+        this.name = name;
+        this.currentPerson = currentPerson;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     public int getId() {

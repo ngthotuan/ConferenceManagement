@@ -4,7 +4,7 @@ import DTO.Conference;
 
 import java.util.List;
 
-public class ConferenceController extends BasicDAO{
+public class ConferenceDAO extends BasicDAO{
     public static Conference getConference(int id){
         return (Conference) get(id, Conference.class);
     }

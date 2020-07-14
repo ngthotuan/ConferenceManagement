@@ -4,7 +4,7 @@ import DTO.Place;
 
 import java.util.List;
 
-public class PlaceController extends BasicDAO{
+public class PlaceDAO extends BasicDAO{
     public static Place getPlace(int id){
         return (Place) get(id, Place.class);
     }
