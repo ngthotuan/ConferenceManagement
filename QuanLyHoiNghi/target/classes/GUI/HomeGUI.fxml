@@ -5,21 +5,26 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.HomeBLL">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/1.8.251" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.HomeBLL">
    <center>
-      <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true"  BorderPane.alignment="CENTER" />
+      <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER" />
    </center>
    <top>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <Label text="Danh sách hội nghị" textAlignment="CENTER" textFill="#dd1717">
-               <font>
-                  <Font size="50.0" />
-               </font>
-            </Label>
-            <CheckBox fx:id="cardViews" layoutX="497.0" layoutY="22.0" mnemonicParsing="false" text="CardViews" />
+            <HBox alignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <Label text="Danh sách hội nghị" textAlignment="CENTER" textFill="#dd1717">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="cardViews" mnemonicParsing="false" text="CardViews" />
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </top>

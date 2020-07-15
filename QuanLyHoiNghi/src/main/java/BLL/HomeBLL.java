@@ -41,7 +41,7 @@ public class HomeBLL implements Initializable{
         // listView by default
         scrollPane.setContent(vbox);
         // load data to Grid
-        initGridPane(conferences, 2);
+        initGridPane(conferences, 3);
 
 
         cardViews.selectedProperty().addListener(new ChangeListener<Boolean>() {

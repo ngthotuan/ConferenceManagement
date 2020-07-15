@@ -11,8 +11,9 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 
-public class HoiNghiCardBLL extends VBox {
+public class HoiNghiCardBLL extends AnchorPane {
 
     @FXML
     private Label labelConferenceName;
@@ -23,6 +24,10 @@ public class HoiNghiCardBLL extends VBox {
     @FXML
     private Label labelMaxPerson;
     @FXML
+    private Label labelHoldTime;
+    @FXML
+    private Label labelShortDescription;
+    @FXML
     private ImageView imageView;
 
     private Conference conference;
@@ -32,16 +37,18 @@ public class HoiNghiCardBLL extends VBox {
         loadFxml(HoiNghiListBLL.class.getResource("../../GUI/Elements/HoiNghiCard.fxml"), this);
         this.conference = conference;
         try{
-            labelConferenceName.setText(conference.getName());
-            labelAddress.setText(conference.getPlaceByPlaceId().getAddress());
+            labelConferenceName.setText("Tên: " + conference.getName());
+            labelShortDescription.setText("Mô tả: "+ conference.getShortDescription());
             labelCurrentPerson.setText(conference.getCurrentPerson().toString());
             labelMaxPerson.setText(conference.getPlaceByPlaceId().getLimitPerson().toString());
             imageView.setImage(new Image(
                     String.valueOf(getClass().getResource("../../Images/"+ conference.getImage()))));
+            labelAddress.setText("Địa điểm: " + conference.getPlaceByPlaceId().getAddress());
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm aaa");
+            labelHoldTime.setText(formatter.format(conference.getHoldTime()));
+
         } catch (NullPointerException e){
             System.err.println("NullPointException");
-            labelMaxPerson.setText("undefined");
-            labelAddress.setText("undefined");
         } catch (IllegalArgumentException e){
             System.err.printf("Invalid URL: Invalid URL or resource not found %s%n", conference.getImage());
             imageView.setImage(new Image(
