@@ -9,6 +9,14 @@ public class MeetingAccountPK implements Serializable {
     private String userId;
     private int conferenceId;
 
+    public MeetingAccountPK() {
+    }
+
+    public MeetingAccountPK(String userId, int conferenceId) {
+        this.userId = userId;
+        this.conferenceId = conferenceId;
+    }
+
     @Column(name = "userId", nullable = false, length = 20)
     @Id
     public String getUserId() {

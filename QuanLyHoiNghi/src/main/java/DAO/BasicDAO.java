@@ -18,6 +18,8 @@ public abstract class BasicDAO {
             DTO = session.get(dtoClass, id);
         } catch (Exception e){
             e.printStackTrace();
+        } finally {
+            session.close();
         }
         return DTO;
     }
@@ -28,6 +30,8 @@ public abstract class BasicDAO {
             DTO = session.get(dtoClass, id);
         } catch (Exception e){
             e.printStackTrace();
+        } finally {
+            session.close();
         }
         return DTO;
     }
@@ -71,6 +75,24 @@ public abstract class BasicDAO {
         try {
             transaction = session.beginTransaction();
             session.update(DTO);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+            result = false;
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+    protected static boolean delete(DTO DTO){
+        boolean result = true;
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.delete(DTO);
             transaction.commit();
         } catch (HibernateException ex) {
             //Log the exception

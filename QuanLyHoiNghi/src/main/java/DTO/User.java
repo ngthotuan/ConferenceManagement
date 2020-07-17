@@ -13,6 +13,14 @@ public class User implements DTO {
     private Byte isAdmin;
     private Collection<MeetingAccount> meetingAccountsByUsername;
 
+    public User() {
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     @Id
     @Column(name = "username", nullable = false, length = 20)
     public String getUsername() {

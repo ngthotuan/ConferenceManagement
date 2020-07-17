@@ -13,12 +13,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.DetailConferenceBLL">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/1.8.251" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.DetailConferenceBLL">
    <top>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Quay lại" AnchorPane.leftAnchor="0.0" />
-            <Button mnemonicParsing="false" text="Đăng ký tham dự" AnchorPane.rightAnchor="0.0" />
+            <Button mnemonicParsing="false" onAction="#backToMain" text="Quay lại" AnchorPane.leftAnchor="0.0" />
+            <Button mnemonicParsing="false" fx:id="btnJoinAndLeave" text="Đăng ký tham dự" AnchorPane.rightAnchor="0.0" />
          </children>
       </AnchorPane>
    </top>

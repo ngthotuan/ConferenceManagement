@@ -5,11 +5,19 @@ import java.util.Objects;
 
 @Entity
 @IdClass(MeetingAccountPK.class)
-public class MeetingAccount {
+public class MeetingAccount implements DTO {
     private String userId;
     private int conferenceId;
     private User userByUserId;
     private Conference conferenceByConferenceId;
+
+    public MeetingAccount() {
+    }
+
+    public MeetingAccount(String userId, int conferenceId) {
+        this.userId = userId;
+        this.conferenceId = conferenceId;
+    }
 
     @Id
     @Column(name = "userId", nullable = false, length = 20)
@@ -30,6 +38,7 @@ public class MeetingAccount {
     public void setConferenceId(int conferenceId) {
         this.conferenceId = conferenceId;
     }
+
 
     @Override
     public boolean equals(Object o) {

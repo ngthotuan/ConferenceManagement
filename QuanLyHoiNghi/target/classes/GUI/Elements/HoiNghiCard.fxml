@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root fx:id="root" prefHeight="295.0" prefWidth="341.0" stylesheets="@HoiNghiCard.css" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="root" prefHeight="295.0" prefWidth="341.0" stylesheets="@HoiNghiCard.css" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/1.8.251" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="CENTER" layoutX="2.0" layoutY="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -37,7 +37,7 @@
       </VBox>
       <VBox alignment="CENTER" layoutX="116.0" layoutY="245.0" prefHeight="36.0" prefWidth="110.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button id="button" mnemonicParsing="false" text="Xem chi tiết" />
+            <Button id="button" onAction="#changeLabel" mnemonicParsing="false" text="Xem chi tiết" />
          </children>
       </VBox>
    </children>
