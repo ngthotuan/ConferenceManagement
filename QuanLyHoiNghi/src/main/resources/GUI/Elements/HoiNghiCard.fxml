@@ -37,7 +37,7 @@
       </VBox>
       <VBox alignment="CENTER" layoutX="116.0" layoutY="245.0" prefHeight="36.0" prefWidth="110.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button id="button" onAction="#changeLabel" mnemonicParsing="false" text="Xem chi tiết" />
+            <Button id="button" onAction="#seeDetail" mnemonicParsing="false" text="Xem chi tiết" />
          </children>
       </VBox>
    </children>

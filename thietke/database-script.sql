@@ -9,8 +9,9 @@ CREATE TABLE `Conference` (
                                `detailDescription` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
                                `image` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
                                `holdTime` datetime,
-                               `conferenceTime` long,
-                               `currentPerson` int DEFAULT 0
+                               `conferenceTime` int,
+                               `currentPerson` int DEFAULT 0,
+                               `limitPerson` int
 );
 
 CREATE TABLE `Place` (
@@ -25,12 +26,14 @@ CREATE TABLE `User` (
                          `password` varchar(50),
                          `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
                          `email` varchar(50),
-                         `isAdmin` bool
+                         `isAdmin` bool DEFAULT false
+                         `isBlocked` bool DEFAULT false
 );
 
 CREATE TABLE `MeetingAccount` (
                                    `userId` varchar(20),
                                    `conferenceId` int,
+                                   `isAccepted` bool DEFAULT false,
                                    PRIMARY KEY (`userId`, `conferenceId`)
 );
 

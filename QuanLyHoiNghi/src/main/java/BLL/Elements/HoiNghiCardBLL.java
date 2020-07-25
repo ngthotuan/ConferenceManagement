@@ -1,20 +1,14 @@
 package BLL.Elements;
 
-import BLL.DetailConferenceBLL;
-import DAO.ConferenceDAO;
 import DTO.Conference;
-import javafx.beans.binding.ObjectBinding;
+import Utils.MyStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,7 +41,7 @@ public class HoiNghiCardBLL extends AnchorPane {
             labelConferenceName.setText("Tên: " + conference.getName());
             labelShortDescription.setText("Mô tả: "+ conference.getShortDescription());
             labelCurrentPerson.setText(conference.getCurrentPerson().toString());
-            labelMaxPerson.setText(conference.getPlaceByPlaceId().getLimitPerson().toString());
+            labelMaxPerson.setText(conference.getLimitPerson().toString());
             imageView.setImage(new Image(
                     String.valueOf(getClass().getResource("../../Images/"+ conference.getImage()))));
             labelAddress.setText("Địa điểm: " + conference.getPlaceByPlaceId().getAddress());
@@ -64,29 +58,12 @@ public class HoiNghiCardBLL extends AnchorPane {
         }
     }
 
-    public void changeLabel(ActionEvent event)
+    public void seeDetail(ActionEvent event)
     {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("../../GUI/DetailConferenceGUI.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setTitle("Chi tiết hội nghị");
-            DetailConferenceBLL detailController = fxmlLoader.getController();
-            detailController.setValue(conference);
-            stage.setScene(scene);
-//            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-            labelCurrentPerson.textProperty().bind(new ObjectBinding<String>() {
-                @Override
-                protected String computeValue() {
-                    return String.valueOf(ConferenceDAO.getConference(conference.getId()).getCurrentPerson());
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        MyStage.openStageWithValue(event,
+                "Chi tiết hội nghị",
+                getClass().getResource("../../GUI/DetailConferenceGUI.fxml"),
+                conference);
     }
 
 

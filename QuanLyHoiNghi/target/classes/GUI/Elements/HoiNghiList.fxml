@@ -27,7 +27,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button id="button" fx:id="btnDetail" mnemonicParsing="false" onAction="#changeLabel" text="Xem chi tiết" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button id="button" fx:id="btnDetail" mnemonicParsing="false" onAction="#seeDetail" text="Xem chi tiết" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

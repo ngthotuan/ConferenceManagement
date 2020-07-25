@@ -30,17 +30,12 @@ public class MeetingAccountDAO extends BasicDAO {
     public static boolean createMeetingAccount(MeetingAccount meetingAccount) {
         if(!isExist(new MeetingAccountPK(meetingAccount.getUserId(), meetingAccount.getConferenceId()))){
             Conference conference = ConferenceDAO.getConference(meetingAccount.getConferenceId());
-            Place place = conference.getPlaceByPlaceId();
-            if(conference.getCurrentPerson() < place.getLimitPerson()){
+            if(conference.getCurrentPerson() < conference.getLimitPerson()){
                 HashSet<MeetingAccount> cd = new HashSet<>();
                 cd.add(meetingAccount);
                 conference.setMeetingAccountsById(cd);
                 conference.setCurrentPerson(conference.getCurrentPerson()+1);
                 return ConferenceDAO.updateConference(conference);
-//                if(create(meetingAccount)){
-//                    conference.setCurrentPerson(conference.getCurrentPerson()+1);
-//                    return true;
-//                }
             }
         }
         return false;

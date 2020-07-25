@@ -10,6 +10,7 @@ public class MeetingAccount implements DTO {
     private int conferenceId;
     private User userByUserId;
     private Conference conferenceByConferenceId;
+    private Boolean isAccepted;
 
     public MeetingAccount() {
     }
@@ -17,6 +18,7 @@ public class MeetingAccount implements DTO {
     public MeetingAccount(String userId, int conferenceId) {
         this.userId = userId;
         this.conferenceId = conferenceId;
+        this.isAccepted = false;
     }
 
     @Id
@@ -39,14 +41,14 @@ public class MeetingAccount implements DTO {
         this.conferenceId = conferenceId;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MeetingAccount that = (MeetingAccount) o;
         return conferenceId == that.conferenceId &&
-                Objects.equals(userId, that.userId);
+                Objects.equals(userId, that.userId) &&
+                Objects.equals(isAccepted, that.isAccepted) ;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class MeetingAccount implements DTO {
     }
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "username", nullable = false, insertable=false, updatable=false)
+    @JoinColumns(@JoinColumn(name = "userId", referencedColumnName = "username", nullable = false, insertable = false, updatable = false))
     public User getUserByUserId() {
         return userByUserId;
     }
@@ -64,8 +66,18 @@ public class MeetingAccount implements DTO {
         this.userByUserId = userByUserId;
     }
 
+    @Basic
+    @Column(name = "isAccepted", nullable = true)
+    public Boolean getIsAccepted() {
+        return isAccepted;
+    }
+
+    public void setIsAccepted(Boolean isAccepted) {
+        this.isAccepted = isAccepted;
+    }
+
     @ManyToOne
-    @JoinColumn(name = "conferenceId", referencedColumnName = "id", nullable = false, insertable=false, updatable=false)
+    @JoinColumns(@JoinColumn(name = "conferenceId", referencedColumnName = "id", nullable = false, insertable = false, updatable = false))
     public Conference getConferenceByConferenceId() {
         return conferenceByConferenceId;
     }

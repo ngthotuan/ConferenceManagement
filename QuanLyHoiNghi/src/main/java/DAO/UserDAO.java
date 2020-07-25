@@ -28,7 +28,7 @@ public class UserDAO extends BasicDAO{
             return false;
         }
         else {
-            user.setPassword(Password.genPassword(user.getPassword()));
+//            user.setPassword(Password.genPassword(user.getPassword()));
             return update(user);
         }
     }

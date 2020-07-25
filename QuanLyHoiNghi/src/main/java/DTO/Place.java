@@ -68,7 +68,7 @@ public class Place implements DTO {
         return Objects.hash(id, name, address, limitPerson);
     }
 
-    @OneToMany(mappedBy = "placeByPlaceId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "placeByPlaceId")
     public Collection<Conference> getConferencesById() {
         return conferencesById;
     }

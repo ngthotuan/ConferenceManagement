@@ -5,14 +5,22 @@ import BLL.Elements.HoiNghiListBLL;
 import DAO.ConferenceDAO;
 import DTO.Conference;
 import DTO.User;
+import Utils.MyStage;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,39 +35,90 @@ public class HomeBLL implements Initializable{
     private ScrollPane scrollPane;
     @FXML
     private CheckBox cardViews;
+    @FXML
+    private Label lbUser;
+    @FXML
+    private Label lbLogout;
+
+    @FXML
+    private Hyperlink hpUserProfile;
+
+    @FXML
+    private Hyperlink hpUserConference;
+
+    @FXML
+    private Hyperlink hpUserManagement;
+
+    @FXML
+    private Hyperlink hpConferenceManagement;
+
+    @FXML
+    private Hyperlink hpPlaceManagement;
 
     private List<Conference> conferences;
 
-    public static User user = new User("admin", "admin");
+    public static User user = null;// new User("admin", "admin");
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        conferences = ConferenceDAO.getConferences();
+        updateUserField();
+        hpUserProfile.setOnMouseClicked(event -> {
+            if(user == null){
+                MyStage.openNewStage("Đăng nhập", getClass().getResource("../GUI/LoginGUI.fxml"));
+                updateUserField();
+            }
+            if(user!= null){
+                MyStage.openNewStageWithValue("Thông tin tài khoản",
+                        getClass().getResource("../GUI/UserProfileGUI.fxml"),
+                        user);
+            }
+        });
 
+        hpPlaceManagement.setOnMouseClicked(event -> {
+            MyStage.openNewStage("Địa điểm", getClass().getResource("../GUI/CreatePlaceGUI.fxml"));
+        });
+        //user logout
+        lbLogout.setOnMouseClicked(event -> {
+            lbUser.setText("Khách");
+            user = null;
+            lbLogout.setVisible(false);
+        });
+
+        //show list conference
+        conferences = ConferenceDAO.getConferences();
         conferences.forEach(conference -> {
             vbox.getChildren().add(new HoiNghiListBLL(conference));
         });
         // listView by default
         scrollPane.setContent(vbox);
         initGridPane(GRID_COL);
-
         cardViews.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            conferences = ConferenceDAO.getConferences();
-            System.out.println(conferences.size());
             if(newValue){
-                gridPane.getChildren().removeAll();
-                for(int i =0; i<conferences.size(); i++){
-                    gridPane.add(new HoiNghiCardBLL(conferences.get(i)), i%GRID_COL, i/GRID_COL);
-                }
                 scrollPane.setContent(gridPane);
             }
             else{
-                vbox.getChildren().removeAll(vbox.getChildren());
-                conferences.forEach(conference -> {
-                    vbox.getChildren().add(new HoiNghiListBLL(conference));
-                });
                 scrollPane.setContent(vbox);
             }
         });
+    }
+
+
+
+    private void openUserProfile() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("../GUI/UserProfileGUI.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            UserProfileBLL userProfileBLL = fxmlLoader.getController();
+            userProfileBLL.setValue(user);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Thông tin tài khoản");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initGridPane(int col){
@@ -68,7 +127,19 @@ public class HomeBLL implements Initializable{
         for(int i =0; i < col; i++){
             gridPane.getColumnConstraints().add(column);
         }
-
+        for(int i =0; i<conferences.size(); i++){
+            gridPane.add(new HoiNghiCardBLL(conferences.get(i)), i%GRID_COL, i/GRID_COL);
+        }
     }
 
+    private void updateUserField(){
+        if(user!=null){
+            lbUser.setText(user.getUsername());
+            lbLogout.setVisible(true);
+            if(user.getIsAdmin()){
+                hpConferenceManagement.setDisable(true);
+                hpUserManagement.setDisable(true);
+            }
+        }
+    }
 }

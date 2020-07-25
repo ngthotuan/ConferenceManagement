@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/1.8.251" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.HomeBLL">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="787.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.HomeBLL">
    <center>
-      <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER" />
+      <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" prefHeight="439.0" prefWidth="588.0" BorderPane.alignment="CENTER" />
    </center>
    <top>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <HBox alignment="CENTER" prefHeight="76.0" prefWidth="767.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
                   <Label text="Danh sách hội nghị" textAlignment="CENTER" textFill="#dd1717">
                      <font>
@@ -23,9 +27,64 @@
                      </font>
                   </Label>
                   <CheckBox fx:id="cardViews" mnemonicParsing="false" text="CardViews" />
+                  <Label text="User:">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin></Label>
+                  <Label fx:id="lbUser" text="Khách" textFill="#ee0707">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lbLogout" text="Đăng xuất" textFill="#150dee" visible="false">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
                </children>
             </HBox>
          </children>
       </AnchorPane>
    </top>
+   <left>
+      <AnchorPane prefHeight="424.0" prefWidth="190.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="TOP_CENTER">
+               <children>
+                  <Label text="Thông tin chung" />
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink fx:id="hpUserProfile" text="Quản lý thông tin cá nhân" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink fx:id="hpUserConference" text="Thống kê hội nghị tham dự" />
+                     </children>
+                  </HBox>
+                  <Label layoutX="68.0" layoutY="10.0" text="Phần quản trị" />
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="26.0">
+                     <children>
+                        <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink fx:id="hpUserManagement" text="Quản lý User" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="59.0">
+                     <children>
+                        <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink fx:id="hpConferenceManagement" text="Quản lý hội nghị" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="141.0">
+                     <children>
+                        <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink fx:id="hpPlaceManagement" text="Quản lý địa điểm" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children></AnchorPane>
+   </left>
 </BorderPane>

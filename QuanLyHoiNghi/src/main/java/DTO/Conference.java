@@ -14,8 +14,9 @@ public class Conference implements DTO {
     private String detailDescription;
     private String image;
     private Timestamp holdTime;
-    private String conferenceTime;
+    private Integer conferenceTime;
     private Integer currentPerson;
+    private Integer limitPerson;
     private Place placeByPlaceId;
     private Collection<MeetingAccount> meetingAccountsById;
 
@@ -98,12 +99,12 @@ public class Conference implements DTO {
     }
 
     @Basic
-    @Column(name = "conferenceTime", nullable = true, length = -1)
-    public String getConferenceTime() {
+    @Column(name = "conferenceTime", nullable = true)
+    public Integer getConferenceTime() {
         return conferenceTime;
     }
 
-    public void setConferenceTime(String conferenceTime) {
+    public void setConferenceTime(Integer conferenceTime) {
         this.conferenceTime = conferenceTime;
     }
 
@@ -115,6 +116,16 @@ public class Conference implements DTO {
 
     public void setCurrentPerson(Integer currentPerson) {
         this.currentPerson = currentPerson;
+    }
+
+    @Basic
+    @Column(name = "limitPerson", nullable = true)
+    public Integer getLimitPerson() {
+        return limitPerson;
+    }
+
+    public void setLimitPerson(Integer limitPerson) {
+        this.limitPerson = limitPerson;
     }
 
     @Override
@@ -130,7 +141,8 @@ public class Conference implements DTO {
                 Objects.equals(image, that.image) &&
                 Objects.equals(holdTime, that.holdTime) &&
                 Objects.equals(conferenceTime, that.conferenceTime) &&
-                Objects.equals(currentPerson, that.currentPerson);
+                Objects.equals(currentPerson, that.currentPerson) &&
+                Objects.equals(limitPerson, that.limitPerson);
     }
 
     @Override
@@ -139,7 +151,7 @@ public class Conference implements DTO {
     }
 
     @ManyToOne
-    @JoinColumn(name = "placeId", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumns(@JoinColumn(name = "placeId", referencedColumnName = "id", insertable = false, updatable = false))
     public Place getPlaceByPlaceId() {
         return placeByPlaceId;
     }

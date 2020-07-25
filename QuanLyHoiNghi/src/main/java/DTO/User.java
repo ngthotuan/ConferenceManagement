@@ -10,7 +10,9 @@ public class User implements DTO {
     private String password;
     private String name;
     private String email;
-    private Byte isAdmin;
+    private Boolean isAdmin;
+    private Boolean isBlocked;
+
     private Collection<MeetingAccount> meetingAccountsByUsername;
 
     public User() {
@@ -19,6 +21,19 @@ public class User implements DTO {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User(String[] args) {
+        try {
+            this.username = args[0];
+            this.password = args[1];
+            this.name = args[2];
+            this.email = args[3];
+            this.isAdmin = false;
+            this.isBlocked = false;
+        } catch (IndexOutOfBoundsException e){
+            System.err.println("Failed to create user with array args!!!");
+        }
     }
 
     @Id
@@ -61,14 +76,34 @@ public class User implements DTO {
         this.email = email;
     }
 
+//    @Basic
+//    @Column(name = "isAdmin", nullable = true)
+//    public Byte getIsAdmin() {
+//        return isAdmin;
+//    }
+//
+//    public void setIsAdmin(Byte isAdmin) {
+//        this.isAdmin = isAdmin;
+//    }
+
     @Basic
     @Column(name = "isAdmin", nullable = true)
-    public Byte getIsAdmin() {
+    public Boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(Byte isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setIsAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    @Basic
+    @Column(name = "isBlocked", nullable = true)
+    public Boolean getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(Boolean isBlocked) {
+        this.isBlocked = isBlocked;
     }
 
     @Override
@@ -80,7 +115,8 @@ public class User implements DTO {
                 Objects.equals(password, user.password) &&
                 Objects.equals(name, user.name) &&
                 Objects.equals(email, user.email) &&
-                Objects.equals(isAdmin, user.isAdmin);
+                Objects.equals(isAdmin, user.isAdmin) &&
+                Objects.equals(isBlocked, user.isBlocked);
     }
 
     @Override
@@ -88,7 +124,7 @@ public class User implements DTO {
         return Objects.hash(username, password, name, email, isAdmin);
     }
 
-    @OneToMany(mappedBy = "userByUserId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userByUserId")
     public Collection<MeetingAccount> getMeetingAccountsByUsername() {
         return meetingAccountsByUsername;
     }
@@ -107,4 +143,6 @@ public class User implements DTO {
                 ", isAdmin=" + isAdmin +
                 '}';
     }
+
+
 }

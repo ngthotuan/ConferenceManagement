@@ -1,6 +1,7 @@
 package BLL;
 
 import DAO.UserDAO;
+import Utils.MyStage;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -40,11 +41,13 @@ public class LoginBLL implements Initializable {
                 ((Stage)((Node) event.getSource()).getScene().getWindow()).close();
             }
         });
-        txtUsername.setOnMouseClicked(event -> {
-            labelError.setVisible(false);
-        });
-        txtPassword.setOnMouseClicked(event -> {
-            labelError.setVisible(false);
+        btnSignIn.focusedProperty().addListener(((observable, oldValue, newValue) -> {
+            if(!newValue){
+                labelError.setVisible(false);
+            }
+        }));
+        btnSignUp.setOnAction(event -> {
+            MyStage.openNewStage("Đăng kí", getClass().getResource("../GUI/RegisterGUI.fxml"));
         });
     }
 }
