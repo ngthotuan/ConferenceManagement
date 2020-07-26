@@ -8,9 +8,10 @@ import java.util.Objects;
 public class MeetingAccount implements DTO {
     private String userId;
     private int conferenceId;
+    private Boolean isAccepted;
+
     private User userByUserId;
     private Conference conferenceByConferenceId;
-    private Boolean isAccepted;
 
     public MeetingAccount() {
     }
@@ -53,7 +54,7 @@ public class MeetingAccount implements DTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, conferenceId);
+        return Objects.hash(userId, conferenceId, isAccepted);
     }
 
     @ManyToOne
@@ -91,6 +92,7 @@ public class MeetingAccount implements DTO {
         return "MeetingAccount{" +
                 "userId='" + userId + '\'' +
                 ", conferenceId=" + conferenceId +
+                ", isAccepted=" + isAccepted +
                 '}';
     }
 }

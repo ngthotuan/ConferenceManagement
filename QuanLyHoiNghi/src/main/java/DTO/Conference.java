@@ -3,6 +3,7 @@ package DTO;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -13,14 +14,17 @@ public class Conference implements DTO {
     private String shortDescription;
     private String detailDescription;
     private String image;
-    private Timestamp holdTime;
+    private Date holdTime;
     private Integer conferenceTime;
     private Integer currentPerson;
     private Integer limitPerson;
+    private Boolean isAcceptedRegister;
     private Place placeByPlaceId;
     private Collection<MeetingAccount> meetingAccountsById;
 
     public Conference() {
+        this.currentPerson = 0;
+        this.isAcceptedRegister = true;
     }
 
     public Conference(String name, Integer currentPerson) {
@@ -90,11 +94,11 @@ public class Conference implements DTO {
 
     @Basic
     @Column(name = "holdTime", nullable = true)
-    public Timestamp getHoldTime() {
+    public Date getHoldTime() {
         return holdTime;
     }
 
-    public void setHoldTime(Timestamp holdTime) {
+    public void setHoldTime(Date holdTime) {
         this.holdTime = holdTime;
     }
 
@@ -128,6 +132,16 @@ public class Conference implements DTO {
         this.limitPerson = limitPerson;
     }
 
+    @Basic
+    @Column(name = "isAcceptedRegister", nullable = true)
+    public Boolean getAcceptedRegister() {
+        return isAcceptedRegister;
+    }
+
+    public void setAcceptedRegister(Boolean acceptedRegister) {
+        isAcceptedRegister = acceptedRegister;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -142,12 +156,13 @@ public class Conference implements DTO {
                 Objects.equals(holdTime, that.holdTime) &&
                 Objects.equals(conferenceTime, that.conferenceTime) &&
                 Objects.equals(currentPerson, that.currentPerson) &&
-                Objects.equals(limitPerson, that.limitPerson);
+                Objects.equals(limitPerson, that.limitPerson) &&
+                Objects.equals(isAcceptedRegister, that.isAcceptedRegister);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, placeId, name, shortDescription, detailDescription, image, holdTime, conferenceTime, currentPerson);
+        return Objects.hash(id, placeId, name, shortDescription, detailDescription, image, holdTime, conferenceTime, currentPerson, limitPerson, isAcceptedRegister);
     }
 
     @ManyToOne
@@ -160,7 +175,7 @@ public class Conference implements DTO {
         this.placeByPlaceId = placeByPlaceId;
     }
 
-    @OneToMany(mappedBy = "conferenceByConferenceId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "conferenceByConferenceId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Collection<MeetingAccount> getMeetingAccountsById() {
         return meetingAccountsById;
     }

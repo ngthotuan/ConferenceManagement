@@ -21,6 +21,8 @@ public class User implements DTO {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.isAdmin = false;
+        this.isBlocked = false;
     }
 
     public User(String[] args) {
@@ -121,7 +123,7 @@ public class User implements DTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password, name, email, isAdmin);
+        return Objects.hash(username, password, name, email, isAdmin, isBlocked);
     }
 
     @OneToMany(mappedBy = "userByUserId")
@@ -133,6 +135,7 @@ public class User implements DTO {
         this.meetingAccountsByUsername = meetingAccountsByUsername;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
@@ -141,8 +144,7 @@ public class User implements DTO {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", isAdmin=" + isAdmin +
+                ", isBlocked=" + isBlocked +
                 '}';
     }
-
-
 }

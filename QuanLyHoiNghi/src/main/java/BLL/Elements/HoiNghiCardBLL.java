@@ -53,7 +53,7 @@ public class HoiNghiCardBLL extends AnchorPane {
         } catch (IllegalArgumentException e){
             System.err.printf("Invalid URL: Invalid URL or resource not found %s%n", conference.getImage());
             imageView.setImage(new Image(
-                    String.valueOf(getClass().getResource("../../Images/team.png"))));
+                    String.valueOf(getClass().getResource("../../Images/default.png"))));
 
         }
     }

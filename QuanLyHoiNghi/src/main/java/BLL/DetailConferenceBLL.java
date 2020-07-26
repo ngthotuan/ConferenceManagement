@@ -5,8 +5,11 @@ import DAO.MeetingAccountDAO;
 import DTO.Conference;
 import DTO.MeetingAccount;
 import DTO.MeetingAccountPK;
+import Model.JoinAccount;
 import Utils.MyAlert;
 import Utils.MyStage;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +17,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -25,8 +26,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
+
 
 public class DetailConferenceBLL extends MyController implements Initializable {
     @FXML
@@ -52,6 +53,17 @@ public class DetailConferenceBLL extends MyController implements Initializable {
     private final String BTN_LEAVE_ID = "btnLeave";
     private final String JOIN = "Đăng ký tham dự";
     private final String LEAVE = "Hủy đăng ký tham dự";
+
+    @FXML
+    private TableView<JoinAccount> tbListJoin;
+    @FXML
+    private TableColumn<JoinAccount, Integer> tcStt;
+    @FXML
+    private TableColumn<JoinAccount, String> tcName;
+    @FXML
+    private TableColumn<JoinAccount, String> tcState;
+
+    private ObservableList<JoinAccount> list;
 
     private Conference conference;
 
@@ -85,6 +97,7 @@ public class DetailConferenceBLL extends MyController implements Initializable {
         if(joined){
             MyAlert.show(Alert.AlertType.INFORMATION, "Tham gia hội nghị", "Thành công",
                  "Tham gia hội nghị thành công");
+            list.add(new JoinAccount(meetingAccount));
             updateField();
         } else{
             MyAlert.show(Alert.AlertType.ERROR, "Tham gia hội nghị", "Thất bại",
@@ -97,6 +110,7 @@ public class DetailConferenceBLL extends MyController implements Initializable {
             MyAlert.show(Alert.AlertType.INFORMATION, "Hủy tham gia hội nghị", "Thành công",
                     "Hủy tham gia hội nghị thành công");
             updateField();
+            list.remove(new JoinAccount(meetingAccount));
         } else{
             MyAlert.show(Alert.AlertType.ERROR, "Hủy tham gia hội nghị", "Thất bại",
                     "Hủy tham gia hội nghị thất bại");
@@ -119,7 +133,7 @@ public class DetailConferenceBLL extends MyController implements Initializable {
         }else{
             // user already login
                 // User already join -> Cancel
-                MeetingAccount meetingAccount = new MeetingAccount(HomeBLL.user.getUsername(), conference.getId());
+            MeetingAccount meetingAccount = new MeetingAccount(HomeBLL.user.getUsername(), conference.getId());
                 if(btnJoinAndLeave.getId().equals(BTN_LEAVE_ID)){
                     Optional<ButtonType>  optional = MyAlert.show(Alert.AlertType.CONFIRMATION, "Tham gia hội nghị",
                             "Hủy tham gia", "Bạn có chắc chắn muốn hủy tham gia hội nghị này?");
@@ -137,12 +151,20 @@ public class DetailConferenceBLL extends MyController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         btnJoinAndLeave.setOnAction(this::joinAndLeaveMeeting);
+        tcStt.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tcName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tcState.setCellValueFactory(new PropertyValueFactory<>("state"));
     }
 
     @Override
     public void setValue(Object value) {
         try{
             this.conference = (Conference)value;
+            List<MeetingAccount> meetingAccountsById = (List<MeetingAccount>) conference.getMeetingAccountsById();
+            System.out.println(JoinAccount.convertData(meetingAccountsById));
+            list = FXCollections.observableList(JoinAccount.convertData(meetingAccountsById));
+            tbListJoin.setItems(list);
+
             labelConferenceName.setText(conference.getName());
             labelDetailDescription.setText(conference.getDetailDescription());
             labelCurrentPerson.setText(conference.getCurrentPerson().toString());
@@ -158,7 +180,7 @@ public class DetailConferenceBLL extends MyController implements Initializable {
         } catch (IllegalArgumentException e){
             System.err.printf("Invalid URL: Invalid URL or resource not found %s%n", conference.getImage());
             imageView.setImage(new Image(
-                    String.valueOf(getClass().getResource("../Images/team.png"))));
+                    String.valueOf(getClass().getResource("../Images/default.png"))));
 
         } finally {
             if(HomeBLL.user != null){

@@ -1,17 +1,17 @@
-/*#root{*/
-/*    -fx-background-color: linear-gradient(#17bf76, #cb9a1e);*/
-/*    -fx-background-radius: 30;*/
-/*    -fx-border-radius: 10;*/
-/*    -fx-background-insets: 5;*/
-/*}*/
+#root{
+    -fx-background-color: linear-gradient(#17bf76, #cb9a1e);
+    -fx-background-radius: 30;
+    -fx-border-radius: 10;
+    -fx-background-insets: 5;
+}
 
-/*#button{*/
-/*    -fx-background-color: #1382b8;*/
-/*}*/
-/*#button:hover{*/
-/*    -fx-background-color: #bd104d;*/
-/*}*/
+#button{
+    -fx-background-color: #1382b8;
+}
+#button:hover{
+    -fx-background-color: #bd104d;
+}
 
-/*#label{*/
-/*    -fx-font-size: 20;*/
-/*}*/
+#label{
+    -fx-font-size: 20;
+}

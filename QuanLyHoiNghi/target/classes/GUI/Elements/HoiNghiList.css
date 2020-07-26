@@ -1,18 +1,18 @@
-/*#root{*/
-/*    -fx-background-color: #d7c8d1;*/
-/*    -fx-background-radius: 10;*/
-/*    -fx-border-radius: 10;*/
-/*    -fx-background-insets: 5;*/
-/*}*/
+#root{
+    -fx-background-color: #d7c8d1;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-background-insets: 5;
+}
 
-/*#button{*/
-/*    -fx-background-color: aqua;*/
-/*}*/
-/*#button:hover{*/
-/*    -fx-background-color: green;*/
-/*}*/
+#button{
+    -fx-background-color: aqua;
+}
+#button:hover{
+    -fx-background-color: green;
+}
 
-/*#conferenceName{*/
-/*    -fx-font-size: 25;*/
-/*    -fx-font-style: italic;*/
-/*}*/
+#conferenceName{
+    -fx-font-size: 25;
+    -fx-font-style: italic;
+}

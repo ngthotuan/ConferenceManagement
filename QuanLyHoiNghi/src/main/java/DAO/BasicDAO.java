@@ -5,6 +5,7 @@ import Utils.HibernateUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -63,7 +64,10 @@ public abstract class BasicDAO {
             transaction.rollback();
             System.err.println(ex);
             result = false;
-        } finally {
+        } catch (Exception e){
+            result = false;
+        }
+        finally {
             session.close();
         }
         return result;
