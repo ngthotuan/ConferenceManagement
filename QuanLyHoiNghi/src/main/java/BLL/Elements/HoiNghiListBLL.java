@@ -13,7 +13,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 
 public class HoiNghiListBLL extends AnchorPane {
-
     @FXML
     private Label labelConferenceName;
     @FXML

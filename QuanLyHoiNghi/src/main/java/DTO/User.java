@@ -39,7 +39,7 @@ public class User implements DTO {
     }
 
     @Id
-    @Column(name = "username", nullable = false, length = 20)
+    @Column(name = "username", nullable = false, length = 255)
     public String getUsername() {
         return username;
     }
@@ -49,7 +49,7 @@ public class User implements DTO {
     }
 
     @Basic
-    @Column(name = "password", nullable = true, length = 50)
+    @Column(name = "password", nullable = true, length = 255)
     public String getPassword() {
         return password;
     }
@@ -59,7 +59,7 @@ public class User implements DTO {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 30)
+    @Column(name = "name", nullable = true, length = 255)
     public String getName() {
         return name;
     }
@@ -69,7 +69,7 @@ public class User implements DTO {
     }
 
     @Basic
-    @Column(name = "email", nullable = true, length = 50)
+    @Column(name = "email", nullable = true, length = 255)
     public String getEmail() {
         return email;
     }

@@ -30,6 +30,7 @@ import java.util.*;
 
 
 public class DetailConferenceBLL extends MyController implements Initializable {
+
     @FXML
     private Label labelConferenceName;
     @FXML
@@ -161,7 +162,6 @@ public class DetailConferenceBLL extends MyController implements Initializable {
         try{
             this.conference = (Conference)value;
             List<MeetingAccount> meetingAccountsById = (List<MeetingAccount>) conference.getMeetingAccountsById();
-            System.out.println(JoinAccount.convertData(meetingAccountsById));
             list = FXCollections.observableList(JoinAccount.convertData(meetingAccountsById));
             tbListJoin.setItems(list);
 
@@ -169,18 +169,19 @@ public class DetailConferenceBLL extends MyController implements Initializable {
             labelDetailDescription.setText(conference.getDetailDescription());
             labelCurrentPerson.setText(conference.getCurrentPerson().toString());
             labelMaxPerson.setText(conference.getLimitPerson().toString());
-            imageView.setImage(new Image(
-                    String.valueOf(getClass().getResource("../Images/"+ conference.getImage()))));
             labelAddress.setText(conference.getPlaceByPlaceId().getAddress());
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm aaa");
             labelHoldTime.setText(formatter.format(conference.getHoldTime()));
-
+            labelConferenceTime.setText(String.format("%d giờ %d phút",
+                    conference.getConferenceTime()/60, conference.getConferenceTime()%60));
+            imageView.setImage(new Image(
+                    String.valueOf(getClass().getResource("../" + conference.getImage()))));
         } catch (NullPointerException e){
             System.err.println("NullPointException");
         } catch (IllegalArgumentException e){
-            System.err.printf("Invalid URL: Invalid URL or resource not found %s%n", conference.getImage());
+            System.err.printf("Invalid URL: Invalid URL or resource not found %s%n",conference.getImage());
             imageView.setImage(new Image(
-                    String.valueOf(getClass().getResource("../Images/default.png"))));
+                    String.valueOf(getClass().getResource("../Images/default.jpg"))));
 
         } finally {
             if(HomeBLL.user != null){

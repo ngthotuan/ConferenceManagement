@@ -11,7 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,16 +18,10 @@ import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalField;
 import java.util.*;
 
 public class CreateConferenceBLL implements Initializable {
@@ -66,10 +59,10 @@ public class CreateConferenceBLL implements Initializable {
     private DatePicker dpConferenceDate;
 
     @FXML
-    private ComboBox<Integer> cbConferenceHours;
+    private ComboBox<String> cbConferenceHours;
 
     @FXML
-    private ComboBox<Integer> cbConferenceMinute;
+    private ComboBox<String> cbConferenceMinute;
 
     @FXML
     private TextField txtConferenceHour;
@@ -93,11 +86,16 @@ public class CreateConferenceBLL implements Initializable {
         btnCreateConference.setOnAction(event -> {
             if(userInputValid()){
                 Conference conference = new Conference();
-                if(saveImage(imageFile)){
-                    conference.setImage(buildImageName(imageFile.getName()));
+
+                if(imageFile != null){
+                    String imagePath = buildImageName(imageFile.getName());
+                    if(saveImage(imageFile, imagePath)){
+                        conference.setImage(imagePath);
+                    }
+
                 }
                 conference.setName(txtConferenceName.getText());
-                conference.setPlaceId(placeSelected.getId()); // check if none select place -> error
+                conference.setPlaceId(placeSelected.getId());
                 conference.setLimitPerson(Integer.valueOf(txtLimitPerson.getText()));
                 conference.setShortDescription(txtConferenceShortDescription.getText());
                 conference.setDetailDescription(txtConferenceDetailDescription.getText());
@@ -105,20 +103,24 @@ public class CreateConferenceBLL implements Initializable {
                 LocalDate picker = dpConferenceDate.getValue();
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(picker.getYear(), picker.getMonthValue() - 1, picker.getDayOfMonth(),
-                        cbConferenceHours.getValue(), cbConferenceMinute.getValue(), 0);
-                calendar.setTimeZone(TimeZone.getDefault());
+                       Integer.parseInt(cbConferenceHours.getValue()),Integer.parseInt(cbConferenceMinute.getValue()), 0);
                 Date date = calendar.getTime();
                 conference.setHoldTime(date);
 
-                conference.setConferenceTime(cbConferenceHours.getValue()*60+cbConferenceMinute.getValue());
-                boolean created = ConferenceDAO.createConference(conference);
-                if(created){
+                conference.setConferenceTime(Integer.parseInt(txtConferenceHour.getText())*60+Integer.parseInt(txtConferenceMinute.getText()));
+                int created = ConferenceDAO.createConference(conference);
+                if(created > 0){
                     MyAlert.show(Alert.AlertType.INFORMATION, "Tạo hội nghị",
                             "Thành công","Đã tạo hội nghị thành công");
                 }
+                else if(created == -1){
+                    MyAlert.show(Alert.AlertType.ERROR, "Tạo hội nghị",
+                            "Thất bại","Địa điểm này đã dùng cho hội nghị khác cùng thời gian\n" +
+                                    "Vui lòng thay đổi thời gian của hội nghị");
+                }
                 else {
                     MyAlert.show(Alert.AlertType.ERROR, "Tạo hội nghị",
-                            "Thất bại","Tạo hội nghị thất bại");
+                            "Thất bại","Đã xảy ra lỗi không mong muốn");
                 }
             }
         });
@@ -130,16 +132,21 @@ public class CreateConferenceBLL implements Initializable {
     }
 
     private void processConferenceDate() {
-        List<Integer> hours = new ArrayList<>();
-        for(int i = 0; i < 24; i++){
-            hours.add(i);
+        List<String> hours = new ArrayList<>();
+        List<String> minutes = new ArrayList<>();
+
+        for(int i = 0; i < 10; i++){
+            hours.add(String.format("0%d", i));
+            minutes.add(String.format("0%d", i));
         }
-        List<Integer> minutes = new ArrayList<>();
-        for(int i = 0; i < 60; i++){
-            minutes.add(i);
+        for(int i = 10; i < 24; i++){
+            hours.add(String.valueOf(i));
         }
-        cbConferenceHours.setValue(7);
-        cbConferenceMinute.setValue(30);
+        for(int i = 10; i < 60; i++){
+            minutes.add(String.valueOf(i));
+        }
+        cbConferenceHours.setValue("07");
+        cbConferenceMinute.setValue("30");
         cbConferenceHours.setItems(FXCollections.observableList(hours));
         cbConferenceMinute.setItems(FXCollections.observableList(minutes));
 
@@ -203,12 +210,12 @@ public class CreateConferenceBLL implements Initializable {
         int pos = imageName.indexOf(".");
         return String.format("Images/%s-%s.%s", imageName.substring(0, pos), new Date().getTime(), imageName.substring(pos+1));
     }
-    private boolean saveImage(File file){
+    private boolean saveImage(File file, String imagePath){
         boolean result = true;
         if(file != null){
             try {
                 ImageIO.write(SwingFXUtils.fromFXImage(conferenceImage.getImage(),
-                        null), "png", new File(RESOURCE_PATH+buildImageName(file.getName())));
+                        null), imagePath.substring(imagePath.indexOf(".")+1), new File(RESOURCE_PATH+imagePath));
             } catch (IOException e) {
                 e.printStackTrace();
                 result = false;
@@ -239,10 +246,12 @@ public class CreateConferenceBLL implements Initializable {
         });
 
         cbBoxAddress.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            placeSelected = places.get(newValue.intValue());
-            String limit = placeSelected.getLimitPerson().toString();
-            lbLimitPerson.setText(limit);
-            txtLimitPerson.setText(limit);
+            if(newValue.intValue() >= 0){
+                placeSelected = places.get(newValue.intValue());
+                String limit = placeSelected.getLimitPerson().toString();
+                lbLimitPerson.setText(limit);
+                txtLimitPerson.setText(limit);
+            }
         });
 
         btnCreateNewAddress.setOnAction(event -> {

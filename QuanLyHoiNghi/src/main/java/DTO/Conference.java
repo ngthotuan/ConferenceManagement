@@ -53,7 +53,7 @@ public class Conference implements DTO {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 50)
+    @Column(name = "name", nullable = true, length = 255)
     public String getName() {
         return name;
     }
@@ -63,7 +63,7 @@ public class Conference implements DTO {
     }
 
     @Basic
-    @Column(name = "shortDescription", nullable = true, length = 50)
+    @Column(name = "shortDescription", nullable = true, length = 255)
     public String getShortDescription() {
         return shortDescription;
     }
@@ -73,7 +73,7 @@ public class Conference implements DTO {
     }
 
     @Basic
-    @Column(name = "detailDescription", nullable = true, length = 200)
+    @Column(name = "detailDescription", nullable = true, length = 1023)
     public String getDetailDescription() {
         return detailDescription;
     }
@@ -83,7 +83,7 @@ public class Conference implements DTO {
     }
 
     @Basic
-    @Column(name = "image", nullable = true, length = 200)
+    @Column(name = "image", nullable = true, length = 255)
     public String getImage() {
         return image;
     }

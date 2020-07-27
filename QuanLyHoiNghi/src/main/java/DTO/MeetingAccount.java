@@ -23,7 +23,7 @@ public class MeetingAccount implements DTO {
     }
 
     @Id
-    @Column(name = "userId", nullable = false, length = 20)
+    @Column(name = "userId", nullable = false, length = 255)
     public String getUserId() {
         return userId;
     }

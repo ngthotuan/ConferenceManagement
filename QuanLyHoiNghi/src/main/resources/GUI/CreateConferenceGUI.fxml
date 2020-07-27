@@ -128,9 +128,9 @@
             <TextField fx:id="txtLimitPerson" />
             <HBox alignment="CENTER">
                <children>
-                  <Label text="Sức chứa tối đa: " />
+                  <Label text="Sức chứa của địa điểm bạn chọn: " />
                   <Label fx:id="lbLimitPerson" text="0" />
-                  <Label text=" người (phụ thuộc vào địa điểm bạn chọn)" />
+                  <Label text=" người" />
                </children>
             </HBox>
          </children>

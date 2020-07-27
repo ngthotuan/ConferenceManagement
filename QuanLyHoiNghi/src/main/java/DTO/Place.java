@@ -23,7 +23,7 @@ public class Place implements DTO {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 50)
+    @Column(name = "name", nullable = true, length = 255)
     public String getName() {
         return name;
     }
@@ -33,7 +33,7 @@ public class Place implements DTO {
     }
 
     @Basic
-    @Column(name = "address", nullable = true, length = 50)
+    @Column(name = "address", nullable = true, length = 255)
     public String getAddress() {
         return address;
     }
@@ -68,7 +68,7 @@ public class Place implements DTO {
         return Objects.hash(id, name, address, limitPerson);
     }
 
-    @OneToMany(mappedBy = "placeByPlaceId")
+    @OneToMany(mappedBy = "placeByPlaceId", fetch = FetchType.EAGER)
     public Collection<Conference> getConferencesById() {
         return conferencesById;
     }

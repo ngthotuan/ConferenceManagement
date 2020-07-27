@@ -43,7 +43,7 @@ public class HoiNghiCardBLL extends AnchorPane {
             labelCurrentPerson.setText(conference.getCurrentPerson().toString());
             labelMaxPerson.setText(conference.getLimitPerson().toString());
             imageView.setImage(new Image(
-                    String.valueOf(getClass().getResource("../../Images/"+ conference.getImage()))));
+                    String.valueOf(getClass().getResource("../../" + conference.getImage()))));
             labelAddress.setText("Địa điểm: " + conference.getPlaceByPlaceId().getAddress());
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm aaa");
             labelHoldTime.setText(formatter.format(conference.getHoldTime()));

@@ -31,7 +31,7 @@
          <content>
             <VBox alignment="TOP_CENTER">
                <children>
-                  <ImageView fx:id="imageView" fitHeight="78.0" fitWidth="212.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageView" fitHeight="375.0" fitWidth="380.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/default.png" />
                      </image>
@@ -63,7 +63,7 @@
                         <Label fx:id="labelConferenceName" text="Hội nghị ABC" GridPane.columnIndex="1" />
                         <Label fx:id="labelAddress" text="Địa điểm XYZ" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="labelHoldTime" text="01-01-1990 12:00 AM" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label fx:id="labelConferenceTime" text="1h30p" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="labelConferenceTime" text="1 giờ 30 phút" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
                               <Label fx:id="labelCurrentPerson" text="195" />

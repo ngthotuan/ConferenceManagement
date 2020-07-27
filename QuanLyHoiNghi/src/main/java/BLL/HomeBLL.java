@@ -73,7 +73,9 @@ public class HomeBLL implements Initializable{
                         user);
             }
         });
-
+        hpConferenceManagement.setOnMouseClicked(event -> {
+            MyStage.openNewStage("Tạo hội nghị", getClass().getResource("../GUI/CreateConferenceGUI.fxml"));
+        });
         hpPlaceManagement.setOnMouseClicked(event -> {
             MyStage.openNewStage("Địa điểm", getClass().getResource("../GUI/CreatePlaceGUI.fxml"));
         });
