@@ -6,6 +6,8 @@ import DAO.ConferenceDAO;
 import DTO.Conference;
 import DTO.User;
 import Utils.MyStage;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -58,7 +60,8 @@ public class HomeBLL implements Initializable{
     private List<Conference> conferences;
 
     public static User user = null;// new User("admin", "admin");
-
+    public static SimpleStringProperty username = new SimpleStringProperty("Khách");
+    public static SimpleIntegerProperty userType = new SimpleIntegerProperty(-1);
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         updateUserField();
@@ -84,9 +87,11 @@ public class HomeBLL implements Initializable{
         });
         //user logout
         lbLogout.setOnMouseClicked(event -> {
-            lbUser.setText("Khách");
+//            lbUser.setText("Khách");
             user = null;
-            lbLogout.setVisible(false);
+//            lbLogout.setVisible(false);
+            username.set("Khách");
+            userType.set(-1);
         });
 
         //show list conference
@@ -109,23 +114,6 @@ public class HomeBLL implements Initializable{
 
 
 
-    private void openUserProfile() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("../GUI/UserProfileGUI.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            UserProfileBLL userProfileBLL = fxmlLoader.getController();
-            userProfileBLL.setValue(user);
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Thông tin tài khoản");
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void initGridPane(int col){
         ColumnConstraints column = new ColumnConstraints();
         column.setPercentWidth(1.0*100/col);
@@ -138,13 +126,15 @@ public class HomeBLL implements Initializable{
     }
 
     private void updateUserField(){
-        if(user!=null){
-            lbUser.setText(user.getUsername());
-            lbLogout.setVisible(true);
-            if(user.getIsAdmin()){
-                hpConferenceManagement.setDisable(true);
-                hpUserManagement.setDisable(true);
-            }
-        }
+        lbLogout.visibleProperty().bind(userType.greaterThan(-1));
+        lbUser.textProperty().bind(username);
+//        if(user!=null){
+//            lbUser.setText(user.getUsername());
+//            lbLogout.setVisible(true);
+//            if(user.getIsAdmin()){
+//                hpConferenceManagement.setDisable(true);
+//                hpUserManagement.setDisable(true);
+//            }
+//        }
     }
 }

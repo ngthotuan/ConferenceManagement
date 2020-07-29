@@ -91,7 +91,6 @@
                   </Label>
                   <TableView fx:id="tbListJoin">
                     <columns>
-                      <TableColumn fx:id="tcStt" prefWidth="75.0" text="STT" />
                       <TableColumn fx:id="tcName" prefWidth="75.0" text="Họ tên" />
                         <TableColumn fx:id="tcState" prefWidth="75.0" text="Trạng thái" />
                     </columns>

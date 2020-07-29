@@ -37,10 +37,13 @@ public class LoginBLL implements Initializable {
                 labelError.setVisible(true);
             }
             else if(HomeBLL.user.getIsBlocked()){
+                HomeBLL.user = null;
                 MyAlert.show(Alert.AlertType.ERROR, "Lỗi", "Tài khoản bị khóa",
                         "Vui lòng liên hệ admin để được hỗ trợ");
             }
             else{
+                HomeBLL.username.setValue(HomeBLL.user.getUsername());
+                HomeBLL.userType.setValue(HomeBLL.user.getIsAdmin() ? 1 : 0);
                 ((Stage)((Node) event.getSource()).getScene().getWindow()).close();
             }
         });

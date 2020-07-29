@@ -1,7 +1,9 @@
 package BLL.Elements;
 
+import DAO.ConferenceDAO;
 import DTO.Conference;
 import Utils.MyStage;
+import javafx.beans.binding.ObjectBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,10 +45,15 @@ public class HoiNghiListBLL extends AnchorPane {
 
     public void seeDetail(ActionEvent event)
     {
-        MyStage.openStageWithValue(event,
-                "Chi tiết hội nghị",
+        MyStage.openNewStageWithValue("Chi tiết hội nghị",
                 getClass().getResource("../../GUI/DetailConferenceGUI.fxml"),
                 conference);
+        labelCurrentPerson.textProperty().bind(new ObjectBinding<String>() {
+            @Override
+            protected String computeValue() {
+                return String.valueOf(ConferenceDAO.getConference(conference.getId()).getCurrentPerson());
+            }
+        });
     }
 
     protected static void loadFxml(URL fxmlFile, Object rootController) {

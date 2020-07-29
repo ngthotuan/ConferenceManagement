@@ -1,7 +1,9 @@
 package BLL.Elements;
 
+import DAO.ConferenceDAO;
 import DTO.Conference;
 import Utils.MyStage;
+import javafx.beans.binding.ObjectBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,8 +44,16 @@ public class HoiNghiCardBLL extends AnchorPane {
             labelShortDescription.setText("Mô tả: "+ conference.getShortDescription());
             labelCurrentPerson.setText(conference.getCurrentPerson().toString());
             labelMaxPerson.setText(conference.getLimitPerson().toString());
-            imageView.setImage(new Image(
-                    String.valueOf(getClass().getResource("../../" + conference.getImage()))));
+
+            if(conference.getImage() != null){
+                imageView.setImage(new Image(
+                        String.valueOf(getClass().getResource("../../" + conference.getImage()))));
+            }
+            else{
+                imageView.setImage(new Image(
+                        String.valueOf(getClass().getResource("../../Images/default.png"))));
+            }
+
             labelAddress.setText("Địa điểm: " + conference.getPlaceByPlaceId().getAddress());
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm aaa");
             labelHoldTime.setText(formatter.format(conference.getHoldTime()));
@@ -52,18 +62,20 @@ public class HoiNghiCardBLL extends AnchorPane {
             System.err.println("NullPointException");
         } catch (IllegalArgumentException e){
             System.err.printf("Invalid URL: Invalid URL or resource not found %s%n", conference.getImage());
-            imageView.setImage(new Image(
-                    String.valueOf(getClass().getResource("../../Images/default.png"))));
-
         }
     }
 
     public void seeDetail(ActionEvent event)
     {
-        MyStage.openStageWithValue(event,
-                "Chi tiết hội nghị",
+        MyStage.openNewStageWithValue("Chi tiết hội nghị",
                 getClass().getResource("../../GUI/DetailConferenceGUI.fxml"),
                 conference);
+        labelCurrentPerson.textProperty().bind(new ObjectBinding<String>() {
+            @Override
+            protected String computeValue() {
+                return String.valueOf(ConferenceDAO.getConference(conference.getId()).getCurrentPerson());
+            }
+        });
     }
 
 

@@ -58,8 +58,6 @@ public class DetailConferenceBLL extends MyController implements Initializable {
     @FXML
     private TableView<JoinAccount> tbListJoin;
     @FXML
-    private TableColumn<JoinAccount, Integer> tcStt;
-    @FXML
     private TableColumn<JoinAccount, String> tcName;
     @FXML
     private TableColumn<JoinAccount, String> tcState;
@@ -69,18 +67,18 @@ public class DetailConferenceBLL extends MyController implements Initializable {
     private Conference conference;
 
     public void backToMain(ActionEvent event){
-//        Stage stage = (Stage) ((Node)(event.getSource())).getScene().getWindow();
-//        stage.close();
-        try{
-            Parent root = FXMLLoader.load(getClass().getResource("../GUI/HomeGUI.fxml"));
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//            stage.setTitle("Hội nghị");
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage stage = (Stage) ((Node)(event.getSource())).getScene().getWindow();
+        stage.close();
+//        try{
+//            Parent root = FXMLLoader.load(getClass().getResource("../GUI/HomeGUI.fxml"));
+//            Scene scene = new Scene(root);
+//            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+////            stage.setTitle("Hội nghị");
+//            stage.setScene(scene);
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void updateField(){
@@ -106,15 +104,21 @@ public class DetailConferenceBLL extends MyController implements Initializable {
         }
     }
     private void leaveMeeting(MeetingAccount meetingAccount){
-        boolean leave = MeetingAccountDAO.deleteMeetingAccount(meetingAccount);
-        if(leave){
-            MyAlert.show(Alert.AlertType.INFORMATION, "Hủy tham gia hội nghị", "Thành công",
-                    "Hủy tham gia hội nghị thành công");
-            updateField();
-            list.remove(new JoinAccount(meetingAccount));
-        } else{
+        if(conference.getHoldTime().getTime() < Calendar.getInstance().getTime().getTime()){
             MyAlert.show(Alert.AlertType.ERROR, "Hủy tham gia hội nghị", "Thất bại",
-                    "Hủy tham gia hội nghị thất bại");
+                    "Không thể hủy tham gia hội nghị đã diễn ra");
+        }
+        else{
+            boolean leave = MeetingAccountDAO.deleteMeetingAccount(meetingAccount);
+            if(leave){
+                MyAlert.show(Alert.AlertType.INFORMATION, "Hủy tham gia hội nghị", "Thành công",
+                        "Hủy tham gia hội nghị thành công");
+                updateField();
+                list.remove(new JoinAccount(meetingAccount));
+            } else{
+                MyAlert.show(Alert.AlertType.ERROR, "Hủy tham gia hội nghị", "Thất bại",
+                        "Hủy tham gia hội nghị thất bại");
+            }
         }
     }
     public void joinAndLeaveMeeting(ActionEvent event) {
@@ -152,7 +156,7 @@ public class DetailConferenceBLL extends MyController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         btnJoinAndLeave.setOnAction(this::joinAndLeaveMeeting);
-        tcStt.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tbListJoin.setPlaceholder(new Label("Chưa có user nào đăng kí tham gia"));
         tcName.setCellValueFactory(new PropertyValueFactory<>("name"));
         tcState.setCellValueFactory(new PropertyValueFactory<>("state"));
     }
@@ -174,15 +178,18 @@ public class DetailConferenceBLL extends MyController implements Initializable {
             labelHoldTime.setText(formatter.format(conference.getHoldTime()));
             labelConferenceTime.setText(String.format("%d giờ %d phút",
                     conference.getConferenceTime()/60, conference.getConferenceTime()%60));
-            imageView.setImage(new Image(
-                    String.valueOf(getClass().getResource("../" + conference.getImage()))));
+            if(conference.getImage() != null){
+                imageView.setImage(new Image(
+                        String.valueOf(getClass().getResource("../" + conference.getImage()))));
+            } else{
+                imageView.setImage(new Image(
+                        String.valueOf(getClass().getResource("../Images/default.png"))));
+            }
+
         } catch (NullPointerException e){
             System.err.println("NullPointException");
         } catch (IllegalArgumentException e){
-            System.err.printf("Invalid URL: Invalid URL or resource not found %s%n",conference.getImage());
-            imageView.setImage(new Image(
-                    String.valueOf(getClass().getResource("../Images/default.jpg"))));
-
+            System.err.printf("Invalid URL or resource not found %s%n",conference.getImage());
         } finally {
             if(HomeBLL.user != null){
                 if(MeetingAccountDAO.isExist(new MeetingAccountPK(HomeBLL.user.getUsername(), conference.getId()))){
