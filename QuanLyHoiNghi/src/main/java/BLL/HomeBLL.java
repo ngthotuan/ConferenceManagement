@@ -9,20 +9,13 @@ import Utils.MyStage;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -40,7 +33,9 @@ public class HomeBLL implements Initializable{
     @FXML
     private Label lbUser;
     @FXML
-    private Label lbLogout;
+    private Hyperlink hpLogout;
+    @FXML
+    private Button btnLogin;
 
     @FXML
     private Hyperlink hpUserProfile;
@@ -57,6 +52,12 @@ public class HomeBLL implements Initializable{
     @FXML
     private Hyperlink hpPlaceManagement;
 
+    @FXML
+    private VBox layoutManage;
+
+    @FXML
+    private VBox layoutAdmin;
+
     private List<Conference> conferences;
 
     public static User user = null;// new User("admin", "admin");
@@ -64,12 +65,8 @@ public class HomeBLL implements Initializable{
     public static SimpleIntegerProperty userType = new SimpleIntegerProperty(-1);
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        updateUserField();
+        bindComponent();
         hpUserProfile.setOnMouseClicked(event -> {
-            if(user == null){
-                MyStage.openNewStage("Đăng nhập", getClass().getResource("../GUI/LoginGUI.fxml"));
-                updateUserField();
-            }
             if(user!= null){
                 MyStage.openNewStageWithValue("Thông tin tài khoản",
                         getClass().getResource("../GUI/UserProfileGUI.fxml"),
@@ -85,11 +82,16 @@ public class HomeBLL implements Initializable{
         hpUserManagement.setOnAction(event -> {
             MyStage.openNewStage("Quản lý User", getClass().getResource("../GUI/UserManagementGUI.fxml"));
         });
+        //user login
+
+         btnLogin.setOnAction(event -> {
+            if(user == null){
+                MyStage.openNewStage("Đăng nhập", getClass().getResource("../GUI/LoginGUI.fxml"));
+            }
+        });
         //user logout
-        lbLogout.setOnMouseClicked(event -> {
-//            lbUser.setText("Khách");
+        hpLogout.setOnMouseClicked(event -> {
             user = null;
-//            lbLogout.setVisible(false);
             username.set("Khách");
             userType.set(-1);
         });
@@ -125,16 +127,14 @@ public class HomeBLL implements Initializable{
         }
     }
 
-    private void updateUserField(){
-        lbLogout.visibleProperty().bind(userType.greaterThan(-1));
+    private void bindComponent(){
+        hpLogout.visibleProperty().bind(userType.greaterThan(-1));
         lbUser.textProperty().bind(username);
-//        if(user!=null){
-//            lbUser.setText(user.getUsername());
-//            lbLogout.setVisible(true);
-//            if(user.getIsAdmin()){
-//                hpConferenceManagement.setDisable(true);
-//                hpUserManagement.setDisable(true);
-//            }
-//        }
+        layoutManage.managedProperty().bind(userType.greaterThan(-1));
+        layoutManage.visibleProperty().bind(userType.greaterThan(-1));
+        layoutAdmin.managedProperty().bind(userType.greaterThan(0));
+        layoutAdmin.visibleProperty().bind(userType.greaterThan(0));
+        hpLogout.visibleProperty().bind(userType.greaterThan(-1));
+        btnLogin.visibleProperty().bind(userType.isEqualTo(-1));
     }
 }

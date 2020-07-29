@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Elements.ConferenceAcceptUser">
+   <children>
+      <TableView layoutX="46.0" layoutY="48.0" prefHeight="317.0" prefWidth="509.0">
+        <columns>
+          <TableColumn prefWidth="132.0" text="Username" />
+          <TableColumn prefWidth="206.0" text="Họ tên" />
+            <TableColumn prefWidth="75.0" text="Trạng thái" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <CheckBox layoutX="457.0" layoutY="18.0" mnemonicParsing="false" text="CheckBox" />
+      <MenuButton layoutX="185.0" layoutY="14.0" mnemonicParsing="false" text="MenuButton">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </MenuButton>
+   </children>
+</AnchorPane>

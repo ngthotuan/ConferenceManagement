@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
@@ -10,81 +11,208 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="787.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.HomeBLL">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="852.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.HomeBLL">
    <center>
-      <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" prefHeight="439.0" prefWidth="588.0" BorderPane.alignment="CENTER" />
+      <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: #7f3333;" BorderPane.alignment="CENTER" />
    </center>
-   <top>
-      <AnchorPane BorderPane.alignment="CENTER">
+   <left>
+      <VBox fx:id="layoutManage" prefHeight="519.0" prefWidth="207.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="76.0" prefWidth="767.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <VBox>
                <children>
-                  <Label text="Danh sách hội nghị" textAlignment="CENTER" textFill="#dd1717">
+                  <Label text="THÔNG TIN CHUNG">
+                     <textFill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color blue="0.03618421033024788" green="0.08684210479259491" red="0.04969298094511032" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color blue="0.06666667014360428" green="0.7490196228027344" red="0.8235294222831726" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </RadialGradient>
+                     </textFill>
                      <font>
-                        <Font size="50.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <CheckBox fx:id="cardViews" mnemonicParsing="false" text="CardViews" />
-                  <Label text="User:">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin></Label>
-                  <Label fx:id="lbUser" text="Khách" textFill="#ee0707">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="lbLogout" text="Đăng xuất" textFill="#150dee" visible="false">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-         </children>
-      </AnchorPane>
-   </top>
-   <left>
-      <AnchorPane prefHeight="424.0" prefWidth="190.0" BorderPane.alignment="CENTER">
-         <children>
-            <VBox alignment="TOP_CENTER">
-               <children>
-                  <Label text="Thông tin chung" />
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                        <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
-                        <Hyperlink fx:id="hpUserProfile" text="Quản lý thông tin cá nhân" />
+                        <ImageView fitHeight="33.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink fx:id="hpUserProfile" text="QUẢN LÝ THÔNG TIN CÁ NHÂN" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Hyperlink>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                        <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
-                        <Hyperlink fx:id="hpUserConference" text="Thống kê hội nghị tham dự" />
-                     </children>
-                  </HBox>
-                  <Label layoutX="68.0" layoutY="10.0" text="Phần quản trị" />
-                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="26.0">
-                     <children>
-                        <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
-                        <Hyperlink fx:id="hpUserManagement" text="Quản lý User" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="59.0">
-                     <children>
-                        <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
-                        <Hyperlink fx:id="hpConferenceManagement" text="Quản lý hội nghị" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="141.0">
-                     <children>
-                        <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
-                        <Hyperlink fx:id="hpPlaceManagement" text="Quản lý địa điểm" />
+                        <ImageView fitHeight="33.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink fx:id="hpUserConference" text="THỐNG KÊ HỘI NGHỊ THAM GIA" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Hyperlink>
                      </children>
                   </HBox>
                </children>
             </VBox>
-         </children></AnchorPane>
+            <VBox fx:id="layoutAdmin">
+               <children>
+                  <Label text="PHẦN QUẢN TRỊ">
+                     <textFill>
+                        <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color blue="0.03618421033024788" green="0.08684210479259491" red="0.04969298094511032" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color blue="0.06666667014360428" green="0.7490196228027344" red="0.8235294222831726" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </RadialGradient>
+                     </textFill>
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <ImageView fitHeight="33.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink fx:id="hpUserManagement" text="QUẢN LÝ TÀI KHOẢN" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Hyperlink>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <ImageView fitHeight="33.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink fx:id="hpConferenceManagement" text="QUẢN LÝ HỘI NGHỊ" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Hyperlink>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <ImageView fitHeight="33.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" />
+                        <Hyperlink fx:id="hpPlaceManagement" text="QUẢN LÝ CÁC ĐỊA ĐIỂM" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Hyperlink>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="5.0" />
+         </BorderPane.margin>
+      </VBox>
    </left>
+   <top>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" text="DASH BOARD" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="16.0">
+               <font>
+                  <Font name="System Bold" size="37.0" />
+               </font>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color blue="0.03618421033024788" green="0.08684210479259491" red="0.04969298094511032" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color blue="0.2389327436685562" green="0.2389327436685562" red="0.7289473414421082" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="44.0" text="DANH SÁCH CÁC HỘI NGHỊ" textAlignment="JUSTIFY" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color blue="0.03618421033024788" green="0.08684210479259491" red="0.04969298094511032" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color blue="0.046476610004901886" green="0.046476610004901886" red="0.7605262994766235" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="cardViews" layoutX="463.0" layoutY="43.0" mnemonicParsing="false" />
+            <VBox alignment="CENTER" layoutX="589.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="btnLogin" contentDisplay="CENTER" mnemonicParsing="false" text="Đăng nhập" textAlignment="CENTER" textFill="#7c783a">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label text="User: " />
+                        <Label fx:id="lbUser" text="Khách">
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color blue="0.6980392336845398" green="0.12156862765550613" red="0.8549019694328308" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color blue="0.7137255072593689" green="0.8509804010391235" red="0.12941177189350128" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Hyperlink fx:id="hpLogout" text="Đăng xuất" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </top>
 </BorderPane>
