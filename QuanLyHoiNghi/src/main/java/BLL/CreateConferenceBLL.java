@@ -25,7 +25,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class CreateConferenceBLL implements Initializable {
-    private static final String RESOURCE_PATH = System.getProperty("user.dir")+"/src/main/resources/";
+    private static final String RESOURCE_PATH = "src/main/resources/";
     private File imageFile;
 
     @FXML
@@ -207,7 +207,7 @@ public class CreateConferenceBLL implements Initializable {
     }
 
     private String buildImageName(String imageName){
-        int pos = imageName.indexOf(".");
+        int pos = imageName.lastIndexOf(".");
         return String.format("Images/%s-%s.%s", imageName.substring(0, pos), new Date().getTime(), imageName.substring(pos+1));
     }
     private boolean saveImage(File file, String imagePath){
@@ -215,7 +215,7 @@ public class CreateConferenceBLL implements Initializable {
         if(file != null){
             try {
                 ImageIO.write(SwingFXUtils.fromFXImage(conferenceImage.getImage(),
-                        null), imagePath.substring(imagePath.indexOf(".")+1), new File(RESOURCE_PATH+imagePath));
+                        null), imagePath.substring(imagePath.lastIndexOf(".")+1), new File(RESOURCE_PATH+imagePath));
             } catch (IOException e) {
                 e.printStackTrace();
                 result = false;

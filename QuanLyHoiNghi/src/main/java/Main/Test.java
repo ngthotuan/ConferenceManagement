@@ -26,7 +26,7 @@ public class Test  extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/GUI/CreateConferenceGUI.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("../GUI/UserManagementGUI.fxml"));
             Scene scene = new Scene(parent);
             primaryStage.setScene(scene);
             primaryStage.show();

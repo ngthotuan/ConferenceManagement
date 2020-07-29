@@ -1,14 +1,12 @@
 package BLL;
 
 import DAO.UserDAO;
+import Utils.MyAlert;
 import Utils.MyStage;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -37,7 +35,12 @@ public class LoginBLL implements Initializable {
             HomeBLL.user = UserDAO.login(txtUsername.getText(), txtPassword.getText());
             if( HomeBLL.user == null){
                 labelError.setVisible(true);
-            } else{
+            }
+            else if(HomeBLL.user.getIsBlocked()){
+                MyAlert.show(Alert.AlertType.ERROR, "Lỗi", "Tài khoản bị khóa",
+                        "Vui lòng liên hệ admin để được hỗ trợ");
+            }
+            else{
                 ((Stage)((Node) event.getSource()).getScene().getWindow()).close();
             }
         });

@@ -10,11 +10,11 @@ import java.util.Date;
 public class MainClass {
 
     public static void main(String[] args) throws InterruptedException {
-//        for(int i =1 ; i < 100; i++){
-//            String [] arg = {i+"", i+"", "user name "+i, "user email " +i};
-//            User user = new User(arg);
-//            UserDAO.createUser(user);
-//        }
+        for(int i = 1 ; i < 9; i++){
+            String [] arg = {i+"", i+"", "user name "+i, "user email " +i};
+            User user = new User(arg);
+            UserDAO.createUser(user);
+        }
 
     }
 }

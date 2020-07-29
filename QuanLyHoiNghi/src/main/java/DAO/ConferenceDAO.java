@@ -34,8 +34,11 @@ public class ConferenceDAO extends BasicDAO{
             for(Conference con : conferencesById){
                 // 1 minute = 60000 milliseconds
                 // kiểm tra thời gian bắt đầu của hội nghị tại địa điểm có trùng với hội nghị khác đang diễn tra không
-                if(con.getHoldTime().getTime()+con.getConferenceTime()*60000
-                        > conference.getHoldTime().getTime()){
+                long timeStart = con.getHoldTime().getTime();
+                long timeEnd = timeStart + con.getConferenceTime()*60000;
+                long conferenceStart = conference.getHoldTime().getTime();
+
+                if(conferenceStart >= timeStart && conferenceStart <= timeEnd){
 //                    result = -1;
 //                    break;
                     return -1;

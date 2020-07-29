@@ -79,6 +79,9 @@ public class HomeBLL implements Initializable{
         hpPlaceManagement.setOnMouseClicked(event -> {
             MyStage.openNewStage("Địa điểm", getClass().getResource("../GUI/CreatePlaceGUI.fxml"));
         });
+        hpUserManagement.setOnAction(event -> {
+            MyStage.openNewStage("Quản lý User", getClass().getResource("../GUI/UserManagementGUI.fxml"));
+        });
         //user logout
         lbLogout.setOnMouseClicked(event -> {
             lbUser.setText("Khách");

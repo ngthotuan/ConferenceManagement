@@ -1,9 +1,7 @@
 package BLL;
 
 import DAO.PlaceDAO;
-import DAO.UserDAO;
 import DTO.Place;
-import DTO.User;
 import Utils.MyAlert;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.text.ParseException;
 import java.util.ResourceBundle;
 
 public class CreatePlaceBLL implements Initializable {
