@@ -1,10 +1,12 @@
 package Model;
 
 import DAO.UserDAO;
+import DTO.Conference;
 import DTO.MeetingAccount;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class JoinAccount{
     private static final String[] stateName = {"Đã chấp nhận","Chưa chấp nhận"};
@@ -42,6 +44,19 @@ public class JoinAccount{
             result.add(new JoinAccount(meetingAccount));
         });
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JoinAccount that = (JoinAccount) o;
+        return Objects.equals(name, that.name) && Objects.equals(state, that.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, state);
     }
 
     @Override

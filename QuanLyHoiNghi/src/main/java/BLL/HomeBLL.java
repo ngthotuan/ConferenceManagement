@@ -8,15 +8,16 @@ import DTO.User;
 import Utils.MyStage;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -29,7 +30,7 @@ public class HomeBLL implements Initializable{
     @FXML
     private ScrollPane scrollPane;
     @FXML
-    private CheckBox cardViews;
+    private ComboBox<String> viewType;
     @FXML
     private Label lbUser;
     @FXML
@@ -59,12 +60,19 @@ public class HomeBLL implements Initializable{
     private VBox layoutAdmin;
 
     private List<Conference> conferences;
+    private String[] viewTypeString = {"List view", "Card view"};
 
-    public static User user = null;// new User("admin", "admin");
-    public static SimpleStringProperty username = new SimpleStringProperty("Khách");
-    public static SimpleIntegerProperty userType = new SimpleIntegerProperty(-1);
+//    public static User user = null;
+//    public static SimpleStringProperty username = new SimpleStringProperty("Khách");
+//    public static SimpleIntegerProperty userType = new SimpleIntegerProperty(-1);
+
+    public static User user = new User("admin", "admin");
+    public static SimpleStringProperty username = new SimpleStringProperty(user.getUsername());
+    public static SimpleIntegerProperty userType = new SimpleIntegerProperty(user.getIsAdmin() ? 2 : 1);
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        initComponent();
         bindComponent();
         hpUserProfile.setOnMouseClicked(event -> {
             if(user!= null){
@@ -75,6 +83,7 @@ public class HomeBLL implements Initializable{
         });
         hpConferenceManagement.setOnMouseClicked(event -> {
             MyStage.openNewStage("Tạo hội nghị", getClass().getResource("../GUI/CreateConferenceGUI.fxml"));
+            loadData();
         });
         hpPlaceManagement.setOnMouseClicked(event -> {
             MyStage.openNewStage("Địa điểm", getClass().getResource("../GUI/CreatePlaceGUI.fxml"));
@@ -82,9 +91,11 @@ public class HomeBLL implements Initializable{
         hpUserManagement.setOnAction(event -> {
             MyStage.openNewStage("Quản lý User", getClass().getResource("../GUI/UserManagementGUI.fxml"));
         });
+        hpUserConference.setOnAction(event -> {
+            MyStage.openNewStage("Hội nghị của tôi", getClass().getResource("../GUI/UserConferenceGUI.fxml"));
+        });
         //user login
-
-         btnLogin.setOnAction(event -> {
+        btnLogin.setOnAction(event -> {
             if(user == null){
                 MyStage.openNewStage("Đăng nhập", getClass().getResource("../GUI/LoginGUI.fxml"));
             }
@@ -96,35 +107,23 @@ public class HomeBLL implements Initializable{
             userType.set(-1);
         });
 
-        //show list conference
-        conferences = ConferenceDAO.getConferences();
-        conferences.forEach(conference -> {
-            vbox.getChildren().add(new HoiNghiListBLL(conference));
-        });
-        // listView by default
-        scrollPane.setContent(vbox);
-        initGridPane(GRID_COL);
-        cardViews.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue){
-                scrollPane.setContent(gridPane);
+        viewType.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue.equals(0)){
+                scrollPane.setContent(vbox);
             }
             else{
-                scrollPane.setContent(vbox);
+                scrollPane.setContent(gridPane);
             }
         });
     }
 
-
-
-    private void initGridPane(int col){
-        ColumnConstraints column = new ColumnConstraints();
-        column.setPercentWidth(1.0*100/col);
-        for(int i =0; i < col; i++){
-            gridPane.getColumnConstraints().add(column);
-        }
-        for(int i =0; i<conferences.size(); i++){
-            gridPane.add(new HoiNghiCardBLL(conferences.get(i)), i%GRID_COL, i/GRID_COL);
-        }
+    private void initComponent(){
+        viewType.setItems(FXCollections.observableList(Arrays.asList(viewTypeString)));
+        viewType.getSelectionModel().select(0);
+        initGridPane();
+        loadData();
+        // listView by default
+        scrollPane.setContent(vbox);
     }
 
     private void bindComponent(){
@@ -136,5 +135,26 @@ public class HomeBLL implements Initializable{
         layoutAdmin.visibleProperty().bind(userType.greaterThan(0));
         hpLogout.visibleProperty().bind(userType.greaterThan(-1));
         btnLogin.visibleProperty().bind(userType.isEqualTo(-1));
+        hpLogout.managedProperty().bind(userType.greaterThan(-1));
+        btnLogin.managedProperty().bind(userType.isEqualTo(-1));
+    }
+
+    private void loadData(){
+        //show list conference
+        conferences = ConferenceDAO.getConferences();
+        conferences.forEach(conference -> {
+            vbox.getChildren().add(new HoiNghiListBLL(conference));
+        });
+        for(int i =0; i<conferences.size(); i++){
+            gridPane.add(new HoiNghiCardBLL(conferences.get(i)), i%GRID_COL, i/GRID_COL);
+        }
+    }
+
+    private void initGridPane(){
+        ColumnConstraints column = new ColumnConstraints();
+        column.setPercentWidth(1.0*100/GRID_COL);
+        for(int i =0; i < GRID_COL; i++){
+            gridPane.getColumnConstraints().add(column);
+        }
     }
 }

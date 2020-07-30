@@ -2,6 +2,7 @@ package DTO;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -183,7 +184,9 @@ public class Conference implements DTO {
     public void setMeetingAccountsById(Collection<MeetingAccount> meetingAccountsById) {
         this.meetingAccountsById = meetingAccountsById;
     }
-
+    public static boolean isTookPlace(Conference conference){
+        return conference.getHoldTime().getTime()+conference.getConferenceTime()*60000 < Calendar.getInstance().getTime().getTime();
+    }
     @Override
     public String toString() {
         return "Conference{" +

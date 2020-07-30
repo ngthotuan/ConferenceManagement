@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="783.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.UserManagementBLL">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="853.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.UserManagementBLL">
    <center>
       <TableView fx:id="tbUser" prefHeight="365.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
         <columns>
@@ -57,8 +57,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="btnSearch" layoutX="384.0" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" text="Tìm kiếm" AnchorPane.rightAnchor="190.0" />
-            <TextField fx:id="lbSearch" layoutX="6.0" layoutY="1.0" prefHeight="30.0" prefWidth="310.0" promptText="Nhập username hoặc tên hoặc email" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="271.0" />
+            <TextField fx:id="lbSearch" layoutX="6.0" layoutY="1.0" prefHeight="30.0" prefWidth="310.0" promptText="Nhập username hoặc tên hoặc email" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="190.0" />
             <HBox alignment="CENTER" layoutX="387.0" layoutY="39.0" AnchorPane.rightAnchor="190.0">
                <children>
                   <Label text="Trạng thái">

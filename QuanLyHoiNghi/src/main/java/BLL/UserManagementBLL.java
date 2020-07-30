@@ -47,8 +47,6 @@ public class UserManagementBLL implements Initializable {
     @FXML
     private Button btnSeeConference;
 
-    @FXML
-    private Button btnSearch;
 
     @FXML
     private TextField lbSearch;
@@ -60,8 +58,6 @@ public class UserManagementBLL implements Initializable {
     private ComboBox<String> cbUserRole;
 
     ObservableList<User> userObservableList;
-    User userSelected = null;
-    int posSelected = -1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -73,9 +69,7 @@ public class UserManagementBLL implements Initializable {
 
         tbUser.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null){
-                posSelected = userObservableList.indexOf(newValue);
-                userSelected = newValue;
-                if(userSelected.getIsBlocked()){
+                if(newValue.getIsBlocked()){
                     btnBlock.setId("unblock");
                     btnBlock.setText("Bỏ chặn");
                 }
@@ -83,7 +77,7 @@ public class UserManagementBLL implements Initializable {
                     btnBlock.setId("block");
                     btnBlock.setText("Chặn");
                 }
-                if(userSelected.getIsAdmin()){
+                if(newValue.getIsAdmin()){
                     btnAdmin.setId("makeUser");
                     btnAdmin.setText("Chỉ định user");
                 }
@@ -95,60 +89,58 @@ public class UserManagementBLL implements Initializable {
         });
 
         btnBlock.setOnAction(event -> {
+            User userSelected = tbUser.getSelectionModel().getSelectedItem();
+            int posSelected = userObservableList.indexOf(userSelected);
             if (userSelected == null) {
                 MyAlert.show(Alert.AlertType.ERROR, "Vui lòng chọn User!!!");
             }
-            else if(btnBlock.getId().equals("block")){
-                Optional<ButtonType> optional = MyAlert.show(Alert.AlertType.CONFIRMATION, "Chặn User", "Bạn có thực sự muốn chặn",
-                        String.format("%s - %s", userSelected.getUsername(), userSelected.getName()));
-                if(!optional.get().getButtonData().isCancelButton()){
-                    userSelected.setIsBlocked(true);
-                    boolean updateUser = UserDAO.updateUser(userSelected);
-                    if(updateUser){
-                        MyAlert.show(Alert.AlertType.INFORMATION, "Thành công");
-                        userObservableList.set(posSelected, userSelected);
-                    }
-                }
-            }
             else{
-                Optional<ButtonType> optional = MyAlert.show(Alert.AlertType.CONFIRMATION, "Bỏ chặn User", "Bạn có thực sự muốn bỏ chặn",
-                        String.format("%s - %s", userSelected.getUsername(), userSelected.getName()));
-                if(!optional.get().getButtonData().isCancelButton()){
+                Optional<ButtonType> optional;
+                if(btnBlock.getId().equals("block")){
+                    optional = MyAlert.show(Alert.AlertType.CONFIRMATION, "Chặn User", "Bạn có thực sự muốn chặn",
+                            String.format("%s - %s", userSelected.getUsername(), userSelected.getName()));
+                    userSelected.setIsBlocked(true);
+                }
+                else{
+                    optional = MyAlert.show(Alert.AlertType.CONFIRMATION, "Bỏ chặn User", "Bạn có thực sự muốn bỏ chặn",
+                            String.format("%s - %s", userSelected.getUsername(), userSelected.getName()));
                     userSelected.setIsBlocked(false);
+                }
+
+                if(!optional.get().getButtonData().isCancelButton()){
                     boolean updateUser = UserDAO.updateUser(userSelected);
                     if(updateUser){
                         MyAlert.show(Alert.AlertType.INFORMATION, "Thành công");
                         userObservableList.set(posSelected, userSelected);
+//                        filterUser();
                     }
                 }
             }
         });
 
         btnAdmin.setOnAction(event -> {
+            User userSelected = tbUser.getSelectionModel().getSelectedItem();
+            int posSelected = userObservableList.indexOf(userSelected);
             if (userSelected == null) {
                 MyAlert.show(Alert.AlertType.ERROR, "Vui lòng chọn User!!!");
             }
-            else if(btnAdmin.getId().equals("makeAdmin")){
-                Optional<ButtonType> optional = MyAlert.show(Alert.AlertType.CONFIRMATION, "Chỉ định làm admin", "Bạn có thực sự chỉ định làm admin",
-                        String.format("%s - %s", userSelected.getUsername(), userSelected.getName()));
-                if(!optional.get().getButtonData().isCancelButton()){
+            else {
+                Optional<ButtonType> optional;
+                if (btnAdmin.getId().equals("makeAdmin")) {
+                    optional = MyAlert.show(Alert.AlertType.CONFIRMATION, "Chỉ định làm admin", "Bạn có thực sự chỉ định làm admin",
+                            String.format("%s - %s", userSelected.getUsername(), userSelected.getName()));
                     userSelected.setIsAdmin(true);
-                    boolean updateUser = UserDAO.updateUser(userSelected);
-                    if(updateUser){
-                        MyAlert.show(Alert.AlertType.INFORMATION, "Thành công");
-                        userObservableList.set(posSelected, userSelected);
-                    }
-                }
-            }
-            else{
-                Optional<ButtonType> optional = MyAlert.show(Alert.AlertType.CONFIRMATION, "Chỉ định làm user", "Bạn có thực sự muốn chỉ định làm user",
-                        String.format("%s - %s", userSelected.getUsername(), userSelected.getName()));
-                if(!optional.get().getButtonData().isCancelButton()){
+                } else {
+                    optional = MyAlert.show(Alert.AlertType.CONFIRMATION, "Chỉ định làm user", "Bạn có thực sự muốn chỉ định làm user",
+                            String.format("%s - %s", userSelected.getUsername(), userSelected.getName()));
                     userSelected.setIsAdmin(false);
+                }
+                if (!optional.get().getButtonData().isCancelButton()) {
                     boolean updateUser = UserDAO.updateUser(userSelected);
-                    if(updateUser){
+                    if (updateUser) {
                         MyAlert.show(Alert.AlertType.INFORMATION, "Thành công");
                         userObservableList.set(posSelected, userSelected);
+//                        filterUser();
                     }
                 }
             }
@@ -157,27 +149,18 @@ public class UserManagementBLL implements Initializable {
 
         lbSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue.isEmpty()){
-                loadDataTableView();
-                filterUser();
-            }
-        });
-
-        cbUserRole.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            filterUser();
-        });
-
-        cbUserStatus.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            filterUser();
-        });
-
-        btnSearch.setOnAction(event -> {
-            String userInput = lbSearch.getText();
-            if(!userInput.isEmpty()){
-                List<User> userList = UserDAO.findUserByKey(userInput);
+                userObservableList = FXCollections.observableList(UserDAO.getUsers());
+            } else{
+                List<User> userList = UserDAO.findUserByKey(newValue);
                 userObservableList = FXCollections.observableList(userList);
-                filterUser();
             }
+            filterUser();
         });
+
+        cbUserRole.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> filterUser());
+
+        cbUserStatus.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> filterUser());
+
 
         btnSeeConference.setOnAction(event -> {
             System.out.println("See all conference of user");
@@ -190,7 +173,7 @@ public class UserManagementBLL implements Initializable {
         int role = cbUserRole.getSelectionModel().getSelectedIndex();
         int status = cbUserStatus.getSelectionModel().getSelectedIndex();
         for (User user : userObservableList) {
-            //get all
+            System.out.println(user);
             if (role == 0 && status == 0) {
                 userList.add(user);
             } else if (role == 0 && status == 1) {

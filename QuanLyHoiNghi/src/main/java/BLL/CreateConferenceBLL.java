@@ -103,7 +103,7 @@ public class CreateConferenceBLL implements Initializable {
                 LocalDate picker = dpConferenceDate.getValue();
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(picker.getYear(), picker.getMonthValue() - 1, picker.getDayOfMonth(),
-                       Integer.parseInt(cbConferenceHours.getValue()),Integer.parseInt(cbConferenceMinute.getValue()), 0);
+                       cbConferenceHours.getSelectionModel().getSelectedIndex(),cbConferenceMinute.getSelectionModel().getSelectedIndex(), 0);
                 Date date = calendar.getTime();
                 conference.setHoldTime(date);
 
@@ -145,20 +145,13 @@ public class CreateConferenceBLL implements Initializable {
         for(int i = 10; i < 60; i++){
             minutes.add(String.valueOf(i));
         }
-        cbConferenceHours.setValue("07");
-        cbConferenceMinute.setValue("30");
+
         cbConferenceHours.setItems(FXCollections.observableList(hours));
         cbConferenceMinute.setItems(FXCollections.observableList(minutes));
+        cbConferenceHours.getSelectionModel().select(7);
+        cbConferenceMinute.getSelectionModel().select(0);
 
         dpConferenceDate.setValue(LocalDate.now());
-
-
-//        LocalDate picker = dpConferenceDate.getValue();
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.set(picker.getYear(), picker.getMonthValue() - 1, picker.getDayOfMonth(),
-//                cbConferenceHours.getValue(), cbConferenceMinute.getValue(), 0);
-//        Date date = calendar.getTime();
-//        System.out.println(date);
     }
 
     private boolean userInputValid(){

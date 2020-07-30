@@ -3,9 +3,13 @@ package DAO;
 import DTO.Conference;
 import DTO.MeetingAccount;
 import DTO.MeetingAccountPK;
+import DTO.User;
 import Utils.HibernateUtils;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -64,4 +68,20 @@ public class MeetingAccountDAO extends BasicDAO {
         return getMeetingAccount(meetingAccountPK) != null;
     }
 
+    public static List<MeetingAccount> getMeetingAccountByUserId(String userId){
+        List<MeetingAccount> ds = new ArrayList<>();
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        try {
+            String hql = "from MeetingAccount where userId = :userId";
+            Query query = session.createQuery(hql);
+            query.setParameter("userId", userId);
+            ds = query.list();
+        } catch (HibernateException ex) {
+            //Log the exception
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return ds;
+    }
 }

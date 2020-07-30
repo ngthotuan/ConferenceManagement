@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -17,12 +17,9 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="852.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.HomeBLL">
-   <center>
-      <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: #7f3333;" BorderPane.alignment="CENTER" />
-   </center>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="464.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BLL.HomeBLL">
    <left>
-      <VBox fx:id="layoutManage" prefHeight="519.0" prefWidth="207.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="layoutManage" prefHeight="519.0" prefWidth="207.0" style="-fx-background-color: #4566;" BorderPane.alignment="CENTER">
          <children>
             <VBox>
                <children>
@@ -126,14 +123,17 @@
             </VBox>
          </children>
          <BorderPane.margin>
-            <Insets left="5.0" />
+            <Insets />
          </BorderPane.margin>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
       </VBox>
    </left>
    <top>
-      <AnchorPane BorderPane.alignment="CENTER">
+      <AnchorPane style="-fx-background-color: #235;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" text="DASH BOARD" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="16.0">
+            <Label alignment="CENTER" text="DASH BOARD" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
                   <Font name="System Bold" size="37.0" />
                </font>
@@ -154,29 +154,7 @@
                   </RadialGradient>
                </textFill>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="44.0" text="DANH SÁCH CÁC HỘI NGHỊ" textAlignment="JUSTIFY" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <textFill>
-                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color blue="0.03618421033024788" green="0.08684210479259491" red="0.04969298094511032" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color blue="0.046476610004901886" green="0.046476610004901886" red="0.7605262994766235" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </RadialGradient>
-               </textFill>
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
-            <CheckBox fx:id="cardViews" layoutX="463.0" layoutY="43.0" mnemonicParsing="false" />
-            <VBox alignment="CENTER" layoutX="589.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox alignment="CENTER" layoutX="589.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Button fx:id="btnLogin" contentDisplay="CENTER" mnemonicParsing="false" text="Đăng nhập" textAlignment="CENTER" textFill="#7c783a">
                      <font>
@@ -215,4 +193,42 @@
          </children>
       </AnchorPane>
    </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="223.0" layoutY="6.0" text="DANH SÁCH CÁC HỘI NGHỊ" textAlignment="JUSTIFY" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color blue="0.03618421033024788" green="0.08684210479259491" red="0.04969298094511032" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color blue="0.046476610004901886" green="0.046476610004901886" red="0.7605262994766235" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" layoutX="483.0" layoutY="1.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <Label text="Hiện thị">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="viewType" prefWidth="120.0" promptText="List view" />
+               </children>
+            </HBox>
+            <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" layoutX="175.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+         </children>
+      </AnchorPane>
+   </center>
 </BorderPane>

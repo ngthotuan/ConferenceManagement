@@ -22,7 +22,12 @@
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#backToMain" text="Quay lại" AnchorPane.leftAnchor="0.0" />
-            <Button fx:id="btnJoinAndLeave" mnemonicParsing="false" text="Đăng ký tham dự" AnchorPane.rightAnchor="0.0" />
+            <HBox alignment="CENTER" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Button fx:id="btnJoin" mnemonicParsing="false" text="Đăng ký tham dự" />
+                  <Button fx:id="btnLeave" mnemonicParsing="false" text="Hủy đăng ký tham dự" />
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </top>
