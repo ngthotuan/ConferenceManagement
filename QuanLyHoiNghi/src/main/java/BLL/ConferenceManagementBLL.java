@@ -142,7 +142,15 @@ public class ConferenceManagementBLL implements Initializable {
         });
 
         btnConferenceChange.setOnAction(event -> {
-            MyAlert.show(Alert.AlertType.INFORMATION, "Sua doi hoi nghi");
+            if(conferenceSelected == null){
+                MyAlert.show(Alert.AlertType.ERROR, "Lỗi",
+                        "Vui lòng chọn hội nghị để thực hiện thao tác" );
+            }
+            else{
+                MyStage.openNewStageWithValue("Sửa đổi hội nghị",
+                        getClass().getResource("/GUI/EditConferenceGUI.fxml"),
+                        conferenceSelected);
+            }
         });
 
         btnAcceptUser.setOnAction(event -> {

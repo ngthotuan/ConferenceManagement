@@ -89,9 +89,9 @@ public class CreateConferenceBLL implements Initializable {
                 Conference conference = new Conference();
 
                 if(imageFile != null){
-                    String imagePath = buildImageName(imageFile.getName());
-                    if(saveImage(imageFile, imagePath)){
-                        conference.setImage(imagePath);
+                    String imageName = buildImageName(imageFile.getName());
+                    if(saveImage(imageFile, imageName)){
+                        conference.setImage(imageName);
                     }
 
                 }
@@ -162,6 +162,9 @@ public class CreateConferenceBLL implements Initializable {
             builder.append("Bạn chưa chọn địa điểm\n");
         }
         else{
+            if(txtConferenceName.getText().isEmpty()){
+                builder.append("Tên hội nghị không được trống\n");
+            }
             try{
                 int limit = Integer.parseInt(txtLimitPerson.getText());
                 if(limit > placeSelected.getLimitPerson()){
@@ -203,7 +206,7 @@ public class CreateConferenceBLL implements Initializable {
 
     private String buildImageName(String imageName){
         int pos = imageName.lastIndexOf(".");
-        return String.format("%s-%s.%s", imageName.substring(0, pos), new Date().getTime(), imageName.substring(pos+1));
+        return String.format("%s.%s", new Date().getTime(), imageName.substring(pos+1));
     }
 
     private boolean saveImage(File file, String imagePath){
@@ -228,6 +231,7 @@ public class CreateConferenceBLL implements Initializable {
         places = FXCollections.observableList(PlaceDAO.getPlaces());
         cbBoxAddress.setItems(places);
     }
+
     private void processChooseAddress(){
         updateComboboxValue();
         cbBoxAddress.setConverter(new StringConverter<Place>() {
