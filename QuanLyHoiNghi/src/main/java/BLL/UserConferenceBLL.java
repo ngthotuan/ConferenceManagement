@@ -56,7 +56,7 @@ public class UserConferenceBLL implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadDataTableView();
         setCellFactory();
-        tbUserConference.setPlaceholder(new Label("Bạn chưa tham gia hội nghị nào !!!"));
+        tbUserConference.setPlaceholder(new Label("Không tìm thấy hội nghị nào"));
 
         lbSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue.isEmpty()){

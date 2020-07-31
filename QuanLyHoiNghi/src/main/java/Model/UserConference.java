@@ -32,12 +32,12 @@ public class UserConference {
         Conference conference = meetingAccount.getConferenceByConferenceId();
         this.conferenceName = conference.getName();
         this.placeName = conference.getPlaceByPlaceId().getName();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm aaa");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa");
         this.holdTime = formatter.format(conference.getHoldTime());
         this.conferenceTime = String.format("%d giờ %d phút",
                 conference.getConferenceTime()/60, conference.getConferenceTime()%60);
         this.state = meetingAccount.getIsAccepted() ? "Đã chấp nhận" : "Chưa chấp nhận";
-        this.status = Conference.isTookPlace(conference) ? "Đã diễn ra" : "Chưa diễn ra ";
+        this.status = Conference.isTookPlace(conference) ? "Đã diễn ra" : "Chưa diễn ra";
     }
 
     public String getConferenceName() {

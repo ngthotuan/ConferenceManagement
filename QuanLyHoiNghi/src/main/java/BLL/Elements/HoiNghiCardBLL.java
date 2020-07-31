@@ -12,6 +12,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -47,7 +50,8 @@ public class HoiNghiCardBLL extends AnchorPane {
 
             if(conference.getImage() != null){
                 imageView.setImage(new Image(
-                        String.valueOf(getClass().getResource("../../" + conference.getImage()))));
+                        new BufferedInputStream(
+                                new FileInputStream("Images/"+conference.getImage()))));
             }
             else{
                 imageView.setImage(new Image(
@@ -60,8 +64,10 @@ public class HoiNghiCardBLL extends AnchorPane {
 
         } catch (NullPointerException e){
             System.err.println("NullPointException");
+        } catch (FileNotFoundException e) {
+            System.err.printf("FileNotFoundException %s%n", e.getMessage());
         } catch (IllegalArgumentException e){
-            System.err.printf("Invalid URL: Invalid URL or resource not found %s%n", conference.getImage());
+            System.err.printf("Invalid URL or resource not found %s%n",conference.getImage());
         }
     }
 

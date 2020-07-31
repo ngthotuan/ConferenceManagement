@@ -80,4 +80,9 @@ public class MyStage {
             e.printStackTrace();
         }
     }
+
+    public static void close(Event event){
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
 }

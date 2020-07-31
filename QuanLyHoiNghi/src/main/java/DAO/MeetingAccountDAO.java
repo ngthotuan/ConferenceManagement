@@ -3,14 +3,12 @@ package DAO;
 import DTO.Conference;
 import DTO.MeetingAccount;
 import DTO.MeetingAccountPK;
-import DTO.User;
 import Utils.HibernateUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -75,6 +73,39 @@ public class MeetingAccountDAO extends BasicDAO {
             String hql = "from MeetingAccount where userId = :userId";
             Query query = session.createQuery(hql);
             query.setParameter("userId", userId);
+            ds = query.list();
+        } catch (HibernateException ex) {
+            //Log the exception
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return ds;
+    }
+
+    public static List<MeetingAccount> getMeetingAccountByConferenceId(int conferenceId){
+        List<MeetingAccount> ds = new ArrayList<>();
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        try {
+            String hql = "from MeetingAccount where conferenceId = :conferenceId";
+            Query query = session.createQuery(hql);
+            query.setParameter("conferenceId", conferenceId);
+            ds = query.list();
+        } catch (HibernateException ex) {
+            //Log the exception
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return ds;
+    }
+    public static List<MeetingAccount> getMeetingAccountAcceptedByConferenceId(int conferenceId){
+        List<MeetingAccount> ds = new ArrayList<>();
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        try {
+            String hql = "from MeetingAccount where conferenceId = :conferenceId and isAccepted=true";
+            Query query = session.createQuery(hql);
+            query.setParameter("conferenceId", conferenceId);
             ds = query.list();
         } catch (HibernateException ex) {
             //Log the exception

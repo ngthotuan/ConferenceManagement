@@ -82,7 +82,7 @@ public class HomeBLL implements Initializable{
             }
         });
         hpConferenceManagement.setOnMouseClicked(event -> {
-            MyStage.openNewStage("Tạo hội nghị", getClass().getResource("../GUI/CreateConferenceGUI.fxml"));
+            MyStage.openNewStage("Quản lý hội nghị", getClass().getResource("../GUI/ConferenceManagementGUI.fxml"));
             loadData();
         });
         hpPlaceManagement.setOnMouseClicked(event -> {
@@ -141,6 +141,8 @@ public class HomeBLL implements Initializable{
 
     private void loadData(){
         //show list conference
+        vbox.getChildren().removeAll(vbox.getChildren());
+        gridPane.getChildren().removeAll(gridPane.getChildren());
         conferences = ConferenceDAO.getConferences();
         conferences.forEach(conference -> {
             vbox.getChildren().add(new HoiNghiListBLL(conference));

@@ -13,6 +13,13 @@ public class MyAlert {
         return alert.showAndWait();
     }
 
+    public static  Optional<ButtonType> show(javafx.scene.control.Alert.AlertType type, String title, String header){
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        return alert.showAndWait();
+    }
+
     public static  Optional<ButtonType> show(javafx.scene.control.Alert.AlertType type,  String content){
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(type);
         alert.setContentText(content);

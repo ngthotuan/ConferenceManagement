@@ -112,7 +112,8 @@ public class UserManagementBLL implements Initializable {
                     if(updateUser){
                         MyAlert.show(Alert.AlertType.INFORMATION, "Thành công");
                         userObservableList.set(posSelected, userSelected);
-//                        filterUser();
+                        tbUser.refresh();
+
                     }
                 }
             }
@@ -140,7 +141,8 @@ public class UserManagementBLL implements Initializable {
                     if (updateUser) {
                         MyAlert.show(Alert.AlertType.INFORMATION, "Thành công");
                         userObservableList.set(posSelected, userSelected);
-//                        filterUser();
+                        tbUser.refresh();
+
                     }
                 }
             }
@@ -173,7 +175,6 @@ public class UserManagementBLL implements Initializable {
         int role = cbUserRole.getSelectionModel().getSelectedIndex();
         int status = cbUserStatus.getSelectionModel().getSelectedIndex();
         for (User user : userObservableList) {
-            System.out.println(user);
             if (role == 0 && status == 0) {
                 userList.add(user);
             } else if (role == 0 && status == 1) {

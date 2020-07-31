@@ -25,7 +25,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class CreateConferenceBLL implements Initializable {
-    private static final String RESOURCE_PATH = "src/main/resources/";
+    public static final String IMAGE_FOLDER = "Images";
+
     private File imageFile;
 
     @FXML
@@ -112,6 +113,7 @@ public class CreateConferenceBLL implements Initializable {
                 if(created > 0){
                     MyAlert.show(Alert.AlertType.INFORMATION, "Tạo hội nghị",
                             "Thành công","Đã tạo hội nghị thành công");
+                    MyStage.close(event);
                 }
                 else if(created == -1){
                     MyAlert.show(Alert.AlertType.ERROR, "Tạo hội nghị",
@@ -201,14 +203,16 @@ public class CreateConferenceBLL implements Initializable {
 
     private String buildImageName(String imageName){
         int pos = imageName.lastIndexOf(".");
-        return String.format("Images/%s-%s.%s", imageName.substring(0, pos), new Date().getTime(), imageName.substring(pos+1));
+        return String.format("%s-%s.%s", imageName.substring(0, pos), new Date().getTime(), imageName.substring(pos+1));
     }
+
     private boolean saveImage(File file, String imagePath){
         boolean result = true;
         if(file != null){
             try {
+                new File(IMAGE_FOLDER).mkdir();
                 ImageIO.write(SwingFXUtils.fromFXImage(conferenceImage.getImage(),
-                        null), imagePath.substring(imagePath.lastIndexOf(".")+1), new File(RESOURCE_PATH+imagePath));
+                        null), imagePath.substring(imagePath.lastIndexOf(".")+1), new File(String.format("%s/%s", IMAGE_FOLDER, imagePath)));
             } catch (IOException e) {
                 e.printStackTrace();
                 result = false;
@@ -229,7 +233,8 @@ public class CreateConferenceBLL implements Initializable {
         cbBoxAddress.setConverter(new StringConverter<Place>() {
             @Override
             public String toString(Place object) {
-                return String.format("Tên địa điểm:%s%nĐịa chỉ: %s%nGiới hạn: %d người",object.getName(), object.getAddress(), object.getLimitPerson());
+                return String.format("Tên địa điểm:%s%nĐịa chỉ: %s%nGiới hạn: %d người",
+                        object.getName(), object.getAddress(), object.getLimitPerson());
             }
 
             @Override
@@ -248,7 +253,8 @@ public class CreateConferenceBLL implements Initializable {
         });
 
         btnCreateNewAddress.setOnAction(event -> {
-            MyStage.openNewStage("Tạo địa điểm mới", getClass().getResource("/GUI/CreatePlaceGUI.fxml"));
+            MyStage.openNewStage("Tạo địa điểm mới",
+                    getClass().getResource("/GUI/CreatePlaceGUI.fxml"));
             updateComboboxValue();
         });
     }

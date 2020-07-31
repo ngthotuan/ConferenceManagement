@@ -20,6 +20,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -169,7 +172,9 @@ public class DetailConferenceBLL extends MyController implements Initializable {
                     conference.getConferenceTime()/60, conference.getConferenceTime()%60));
             if(conference.getImage() != null){
                 imageView.setImage(new Image(
-                        String.valueOf(getClass().getResource("../" + conference.getImage()))));
+                        new BufferedInputStream(
+                                new FileInputStream("Images/"+conference.getImage()))));
+
             } else{
                 imageView.setImage(new Image(
                         String.valueOf(getClass().getResource("../Images/default.png"))));
@@ -177,6 +182,8 @@ public class DetailConferenceBLL extends MyController implements Initializable {
 
         } catch (NullPointerException e){
             System.err.println("NullPointException");
+        } catch (FileNotFoundException e) {
+            System.err.printf("FileNotFoundException %s%n", e.getMessage());
         } catch (IllegalArgumentException e){
             System.err.printf("Invalid URL or resource not found %s%n",conference.getImage());
         } finally {
