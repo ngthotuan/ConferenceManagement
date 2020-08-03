@@ -2,13 +2,11 @@ package BLL;
 
 import DAO.ConferenceDAO;
 import DAO.MeetingAccountDAO;
-import DAO.UserDAO;
 import DTO.Conference;
 import DTO.MeetingAccount;
-import DTO.User;
-import Model.UserConference;
 import Utils.MyAlert;
 import Utils.MyStage;
+import com.mysql.cj.util.LogUtils;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -150,6 +147,7 @@ public class ConferenceManagementBLL implements Initializable {
                 MyStage.openNewStageWithValue("Sửa đổi hội nghị",
                         getClass().getResource("/GUI/EditConferenceGUI.fxml"),
                         conferenceSelected);
+                loadDataTableView();
             }
         });
 
